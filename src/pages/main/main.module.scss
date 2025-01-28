@@ -5,21 +5,11 @@
   max-width: 1200px;
   margin: 0 auto;
   flex: 1 0 auto;
-
-  h1 {
-    text-align: center;
-    @include font(700, var(--font-family--genos));
-    font-size: 3.6rem;
-  }
 }
 
-.list {
-  list-style: none;
-  position: relative;
-}
-
-.not_found {
+.title {
   text-align: center;
   @include font(700, var(--font-family--genos));
-  font-size: 2rem;
+  color: var(--color--white);
+  font-size: 3.6rem;
 }
