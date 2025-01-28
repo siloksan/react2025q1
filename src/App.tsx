@@ -1,8 +1,8 @@
 import { Component, StrictMode } from 'react';
-import ErrorBoundary from './shared/ui/errorBoundary/ErrorBoundary';
+import ErrorBoundary from './shared/errorBoundary/ErrorBoundary';
+import Main from './pages/main/main';
 
 import './styles/index.scss';
-import Main from './pages/main/main';
 
 export default class App extends Component {
   render() {

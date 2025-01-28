@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 
-import styles from './SpaceCraftDetails.module.scss';
 import { Spacecraft } from '../../api/types';
+import styles from './card.module.scss';
 
 interface Props {
   cardInfo: Spacecraft;

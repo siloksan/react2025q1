@@ -5,14 +5,15 @@
   align-items: center;
   padding: 10px;
   border: 1px solid #ccc;
-  background-color: var(--color--cart);
-  color: var(--color--cart);
+  color: var(--color--cart-text);
+  -webkit-backdrop-filter: saturate(180%) blur(5px);
+  backdrop-filter: saturate(180%) blur(5px);
   h2 {
     @include font(700, var(--font-family--genos));
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
   p {
     @include font(400, var(--font-family--genos));
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
 }
