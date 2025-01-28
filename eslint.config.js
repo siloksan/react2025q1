@@ -32,6 +32,12 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      'prettier/prettier': [
+        'error',
+        {
+          endOfLine: 'auto',
+        },
+      ],
       'react/jsx-props-no-spreading': 'off',
       'react-compiler/react-compiler': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
