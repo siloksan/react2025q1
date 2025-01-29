@@ -1,15 +1,14 @@
 import React, { ComponentProps } from 'react';
 import styles from './search-box.module.scss';
 import loupe from './assets/search-icon.svg';
-import Payload from '../../shared/api/types/apiTypes';
-import StorageService from '../../shared/api/utils/StorageService';
+import StorageService from '../../api/utils/storage-service';
 
 interface State {
   searchTerm: string;
 }
 
 interface Props extends ComponentProps<'div'> {
-  updateData: (payload: Payload) => void;
+  updateData: (name: string) => void;
 }
 
 export default class SearchBox extends React.Component<Props, State> {
@@ -18,14 +17,14 @@ export default class SearchBox extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      searchTerm: this.storageService.getData() || '',
+      searchTerm: this.storageService.getData() ?? '',
     };
   }
 
   componentDidMount(): void {
     const { searchTerm } = this.state;
     const { updateData } = this.props;
-    updateData({ name: searchTerm });
+    updateData(searchTerm.trim());
   }
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +36,7 @@ export default class SearchBox extends React.Component<Props, State> {
   handleSubmit = () => {
     const { searchTerm } = this.state;
     const { updateData } = this.props;
-    updateData({ name: searchTerm.trim() });
+    updateData(searchTerm.trim());
   };
 
   handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
