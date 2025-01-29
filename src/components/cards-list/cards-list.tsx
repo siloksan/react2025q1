@@ -6,11 +6,6 @@ import Card from '../card/card';
 import styles from './cards-list.module.scss';
 import { getSpacecrafts } from './cards-list.get-data';
 
-// interface Props {
-//   cards: SpacecraftsResponse | null;
-//   loading: boolean;
-// }
-
 interface Props {
   searchTerm: string;
 }
@@ -64,7 +59,6 @@ export class CardsList extends Component<Props, State> {
     if (error) {
       throw new Error(error);
     }
-    // const { cards, loading } = this.props;
 
     const renderList = () => {
       if (loading) {
