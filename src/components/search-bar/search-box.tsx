@@ -1,7 +1,8 @@
 import React, { ComponentProps } from 'react';
-import styles from './search-box.module.scss';
 import loupe from './assets/search-icon.svg';
 import StorageService from '../../api/utils/storage-service';
+
+import styles from './search-box.module.scss';
 
 interface State {
   searchTerm: string;
@@ -12,7 +13,7 @@ interface Props extends ComponentProps<'div'> {
 }
 
 export default class SearchBox extends React.Component<Props, State> {
-  private storageService = new StorageService('searchTerm');
+  private readonly storageService = new StorageService('searchTerm');
 
   constructor(props: Props) {
     super(props);

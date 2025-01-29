@@ -1,16 +1,14 @@
 import { PureComponent } from 'react';
-import Payload from '../../shared/api/types/apiTypes';
 import Logo from '../../shared/logo/logo';
-
-import styles from './header.module.scss';
 import SearchBox from '../search-bar/search-box';
 
-type State = object;
+import styles from './header.module.scss';
+
 interface Props {
-  updateData: (payload: Payload) => void;
+  updateData: (name: string) => void;
 }
 
-export class Header extends PureComponent<Props, State> {
+export class Header extends PureComponent<Props> {
   render() {
     const { updateData } = this.props;
     return (
