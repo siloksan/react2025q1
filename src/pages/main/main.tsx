@@ -1,10 +1,10 @@
 import React from 'react';
+import ErrorBoundary from '../../shared/errorBoundary/ErrorBoundary';
 import { ErrorButton } from './components/error-button/error-button';
 import { Header } from '../../components/header/header';
+import { CardsList } from '../../components/cards-list/cards-list';
 
 import styles from './main.module.scss';
-import { CardsList } from '../../components/cards-list/cards-list';
-import ErrorBoundary from '../../shared/errorBoundary/ErrorBoundary';
 
 export default class Main extends React.Component {
   public readonly state = {
