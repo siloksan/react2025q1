@@ -1,6 +1,6 @@
 import { SpacecraftsResponse } from '../../api/types';
 import { requestHandler } from '../../api/utils/request-handler';
-import { CARDS_PER_PAGE } from './main.constants';
+import { CARDS_PER_PAGE } from './cards-list.constants';
 
 interface RequestParams {
   name?: string;
