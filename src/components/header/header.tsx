@@ -1,6 +1,6 @@
 import { PureComponent } from 'react';
 import Logo from '../../shared/logo/logo';
-import SearchBox from '../search-bar/search-box';
+import { SearchBox } from '../search-bar/search-box';
 
 import styles from './header.module.scss';
 

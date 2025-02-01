@@ -1,76 +1,57 @@
-import React, { ComponentProps } from 'react';
+import React, { ChangeEvent, ComponentProps, useState } from 'react';
 import loupe from './assets/search-icon.svg';
-import StorageService from '../../api/utils/storage-service';
+import { LOCALE_STORAGE_KEYS, useStorage } from '../../hooks';
 
 import styles from './search-box.module.scss';
 
-interface State {
-  searchTerm: string;
-}
-
 interface Props extends ComponentProps<'div'> {
-  updateData: (name: string) => void;
+  readonly updateData: (name: string) => void;
 }
 
-export default class SearchBox extends React.Component<Props, State> {
-  private readonly storageService = new StorageService('searchTerm');
+export function SearchBox({ updateData, className = '' }: Props) {
+  const { getValue, setValue } = useStorage();
+  const [searchTerm, setSearchTerm] = useState(getSearchName);
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      searchTerm: this.storageService.getData() ?? '',
-    };
+  function getSearchName() {
+    return getValue(LOCALE_STORAGE_KEYS.SEARCH_TERM) ?? '';
   }
 
-  componentDidMount(): void {
-    const { searchTerm } = this.state;
-    const { updateData } = this.props;
-    updateData(searchTerm.trim());
+  function handleInput(event: ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value.trim();
+    setSearchTerm(value);
+    setValue(LOCALE_STORAGE_KEYS.SEARCH_TERM, value);
   }
 
-  handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    this.storageService.setData(value);
-    this.setState({ searchTerm: value });
-  };
-
-  handleSubmit = () => {
-    const { searchTerm } = this.state;
-    const { updateData } = this.props;
-    updateData(searchTerm.trim());
-  };
-
-  handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
-      this.handleSubmit();
+      handleSubmit();
     }
+  }
+
+  const handleSubmit = () => {
+    updateData(searchTerm);
   };
 
-  render() {
-    const { searchTerm } = this.state;
-    const { className = '' } = this.props;
-
-    return (
-      <div className={`${styles.container} ${className}`}>
-        <div className={styles.form}>
-          <input
-            value={searchTerm || ''}
-            onChange={this.handleInput}
-            onKeyDown={this.handleKeyDown}
-            type="text"
-            className={styles.input}
-            placeholder="Search"
-          />
-          <button
-            className={styles.button}
-            aria-label="Search"
-            type="submit"
-            onClick={this.handleSubmit}
-          >
-            <img src={loupe} alt="loupe icon" />
-          </button>
-        </div>
+  return (
+    <div className={`${styles.container} ${className}`}>
+      <div className={styles.form}>
+        <input
+          value={searchTerm}
+          onChange={handleInput}
+          onKeyDown={handleKeyDown}
+          type="text"
+          className={styles.input}
+          placeholder="Search"
+        />
+        <button
+          className={styles.button}
+          aria-label="Search"
+          type="submit"
+          onClick={handleSubmit}
+        >
+          <img src={loupe} alt="loupe icon" />
+        </button>
       </div>
-    );
-  }
+    </div>
+  );
 }
