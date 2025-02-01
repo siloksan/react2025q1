@@ -23,7 +23,7 @@ export default class Main extends React.Component {
         <Header updateData={this.handleSearch} />
         <main className={styles.main}>
           <ErrorBoundary>
-            <h1 className={styles.title}>Books Beyond</h1>
+            <h1 className={styles.title}>Star Ships</h1>
             <CardsList searchTerm={searchTerm} />
           </ErrorBoundary>
           <ErrorButton />
