@@ -3,15 +3,11 @@ import { SearchBox } from '../search-bar/search-box';
 
 import styles from './header.module.scss';
 
-interface Props {
-  readonly updateData: (name: string) => void;
-}
-
-export function Header({ updateData }: Props) {
+export function Header() {
   return (
     <header className={styles.container}>
       <Logo className={styles.logo} />
-      <SearchBox updateData={updateData} className={styles.search_box} />
+      <SearchBox className={styles.search_box} />
     </header>
   );
 }

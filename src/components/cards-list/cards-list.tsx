@@ -3,17 +3,17 @@ import { SpacecraftsResponse } from '../../api/types';
 import { Loader } from '../../shared/loader/loader';
 import { Card } from '../card/card';
 import { getSpacecrafts } from './cards-list.get-data';
+import { useQueryState } from '../../hooks/use-query-state';
+import { QUERY_KEYS } from '../../constants/query-keys';
 
 import styles from './cards-list.module.scss';
 
-interface Props {
-  readonly searchTerm: string;
-}
-
-export function CardsList({ searchTerm }: Props) {
+export function CardsList() {
   const [data, setData] = useState<SpacecraftsResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const { searchParams } = useQueryState();
+  const searchTerm = searchParams.get(QUERY_KEYS.NAME) ?? '';
 
   useEffect(() => {
     let isMounted = true;

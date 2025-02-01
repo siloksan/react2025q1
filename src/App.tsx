@@ -1,15 +1,19 @@
 import { Component, StrictMode } from 'react';
 import ErrorBoundary from './shared/errorBoundary/ErrorBoundary';
-import { Main } from './pages/main/main';
+import { RouterProvider } from 'react-router';
+import routes from './routes/routes';
 
 import './styles/index.scss';
+// export default function App() {
+//   return <RouterProvider router={routes} />;
+// }
 
 export default class App extends Component {
   render() {
     return (
       <StrictMode>
         <ErrorBoundary>
-          <Main />
+          <RouterProvider router={routes} />
         </ErrorBoundary>
       </StrictMode>
     );

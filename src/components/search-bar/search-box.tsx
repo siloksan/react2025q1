@@ -1,25 +1,18 @@
 import React, { ChangeEvent, ComponentProps, useState } from 'react';
 import loupe from './assets/search-icon.svg';
-import { LOCALE_STORAGE_KEYS, useStorage } from '../../hooks';
+import { useQueryState } from '../../hooks/use-query-state';
+import { QUERY_KEYS } from '../../constants/query-keys';
 
 import styles from './search-box.module.scss';
 
-interface Props extends ComponentProps<'div'> {
-  readonly updateData: (name: string) => void;
-}
-
-export function SearchBox({ updateData, className = '' }: Props) {
-  const { getValue, setValue } = useStorage();
-  const [searchTerm, setSearchTerm] = useState(getSearchName);
-
-  function getSearchName() {
-    return getValue(LOCALE_STORAGE_KEYS.SEARCH_TERM) ?? '';
-  }
+export function SearchBox({ className = '' }: ComponentProps<'div'>) {
+  const { searchParams, setQueryValue } = useQueryState();
+  const initSearchTerm = searchParams.get(QUERY_KEYS.NAME) ?? '';
+  const [term, setTerm] = useState(initSearchTerm);
 
   function handleInput(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value.trim();
-    setSearchTerm(value);
-    setValue(LOCALE_STORAGE_KEYS.SEARCH_TERM, value);
+    const { value } = event.target;
+    setTerm(value);
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -29,14 +22,14 @@ export function SearchBox({ updateData, className = '' }: Props) {
   }
 
   const handleSubmit = () => {
-    updateData(searchTerm);
+    setQueryValue(QUERY_KEYS.NAME, term.trim());
   };
 
   return (
     <div className={`${styles.container} ${className}`}>
       <div className={styles.form}>
         <input
-          value={searchTerm}
+          value={term}
           onChange={handleInput}
           onKeyDown={handleKeyDown}
           type="text"
