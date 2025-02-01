@@ -1,6 +1,6 @@
 import { Component, StrictMode } from 'react';
 import ErrorBoundary from './shared/errorBoundary/ErrorBoundary';
-import Main from './pages/main/main';
+import { Main } from './pages/main/main';
 
 import './styles/index.scss';
 

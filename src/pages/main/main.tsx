@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import ErrorBoundary from '../../shared/errorBoundary/ErrorBoundary';
 import { ErrorButton } from './components/error-button/error-button';
 import { Header } from '../../components/header/header';
@@ -6,29 +6,23 @@ import { CardsList } from '../../components/cards-list/cards-list';
 
 import styles from './main.module.scss';
 
-export default class Main extends React.Component {
-  public readonly state = {
-    searchTerm: '',
-  };
+export function Main() {
+  const [searchTerm, setSearchTerm] = useState('');
 
-  public handleSearch = (name: string) => {
-    this.setState({ searchTerm: name });
-  };
-
-  render() {
-    const { searchTerm } = this.state;
-
-    return (
-      <div>
-        <Header updateData={this.handleSearch} />
-        <main className={styles.main}>
-          <ErrorBoundary>
-            <h1 className={styles.title}>Books Beyond</h1>
-            <CardsList searchTerm={searchTerm} />
-          </ErrorBoundary>
-          <ErrorButton />
-        </main>
-      </div>
-    );
+  function handleSearch(name: string) {
+    setSearchTerm(name);
   }
+
+  return (
+    <div>
+      <Header updateData={handleSearch} />
+      <main className={styles.main}>
+        <ErrorBoundary>
+          <h1 className={styles.title}>Books Beyond</h1>
+          <CardsList searchTerm={searchTerm} />
+        </ErrorBoundary>
+        <ErrorButton />
+      </main>
+    </div>
+  );
 }
