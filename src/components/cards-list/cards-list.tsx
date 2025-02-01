@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { SpacecraftsResponse } from '../../api/types';
-import Loader from '../../shared/loader/loader';
+import { Loader } from '../../shared/loader/loader';
 import Card from '../card/card';
 
 import styles from './cards-list.module.scss';
