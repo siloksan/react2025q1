@@ -1,6 +1,7 @@
 import ErrorBoundary from '../../shared/errorBoundary/ErrorBoundary';
 import { ErrorButton } from './components/error-button/error-button';
 import { CardsList } from '../../components/cards-list/cards-list';
+import { SearchBox } from '../../components/search-bar/search-box';
 
 import styles from './main.module.scss';
 
@@ -9,6 +10,7 @@ export function Main() {
     <main className={styles.main}>
       <ErrorBoundary>
         <h1 className={styles.title}>Star Ships</h1>
+        <SearchBox />
         <CardsList />
       </ErrorBoundary>
       <ErrorButton />
