@@ -7,13 +7,20 @@ import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
 
 import styles from './cards-list.module.scss';
+import { PAGE_OFFSET } from './cards-list.constants';
 
-export function CardsList() {
-  const [data, setData] = useState<SpacecraftsResponse | null>(null);
+interface Props {
+  readonly data: SpacecraftsResponse | null;
+  readonly setData: (data: SpacecraftsResponse | null) => void;
+}
+
+export function CardsList({ data, setData }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { searchParams } = useQueryState();
   const searchTerm = searchParams.get(QUERY_KEYS.NAME) ?? '';
+  const pageNumber =
+    Number(searchParams.get(QUERY_KEYS.PAGE) ?? 1) - PAGE_OFFSET;
 
   useEffect(() => {
     let isMounted = true;
@@ -21,7 +28,10 @@ export function CardsList() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const result = await getSpacecrafts({ name: searchTerm });
+        const result = await getSpacecrafts({
+          name: searchTerm,
+          pageNumber: Number(pageNumber),
+        });
 
         if (isMounted) {
           setData(result);
@@ -43,7 +53,7 @@ export function CardsList() {
     return () => {
       isMounted = false;
     };
-  }, [searchTerm]);
+  }, [searchTerm, pageNumber]);
 
   if (error) {
     throw new Error(error);

@@ -4,6 +4,7 @@ import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
 
 import styles from './search-box.module.scss';
+import { FIRST_PAGE } from '../cards-list/cards-list.constants';
 
 export function SearchBox({ className = '' }: ComponentProps<'div'>) {
   const { searchParams, setQueryValue } = useQueryState();
@@ -21,7 +22,9 @@ export function SearchBox({ className = '' }: ComponentProps<'div'>) {
     }
   }
 
+  // setup current page on the first page when the search term is changed
   const handleSubmit = () => {
+    setQueryValue(QUERY_KEYS.PAGE, FIRST_PAGE.toString());
     setQueryValue(QUERY_KEYS.NAME, term.trim());
   };
 

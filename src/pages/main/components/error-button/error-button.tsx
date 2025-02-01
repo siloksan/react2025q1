@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Button from '../../../../shared/button/button';
+import { Button } from '../../../../shared/button/button';
 
 type Props = object;
 

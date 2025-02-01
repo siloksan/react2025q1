@@ -44,5 +44,3 @@ export function Button<E extends ElementType = typeof defaultElement>(
     </TagName>
   );
 }
-
-export default Button;
