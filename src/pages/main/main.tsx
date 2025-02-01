@@ -8,7 +8,7 @@ export function Main() {
   return (
     <main className={styles.main}>
       <ErrorBoundary>
-        <h1 className={styles.title}>Books Beyond</h1>
+        <h1 className={styles.title}>Star Ships</h1>
         <CardsList />
       </ErrorBoundary>
       <ErrorButton />
