@@ -1,11 +1,12 @@
 import { createBrowserRouter } from 'react-router';
 import Layout from '../layout/layout';
+import NotFoundPage from '../pages/not-found/not-found';
 
 export const routesConfig = [
   {
     path: '/',
     element: <Layout />,
-    // errorElement: <NotFoundPage />,
+    errorElement: <NotFoundPage />,
     // children: [
     //   {
     //     path: '/',
