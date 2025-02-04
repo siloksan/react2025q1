@@ -1,0 +1,15 @@
+@use '@styles/mixins' as *;
+
+.main {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1 0 auto;
+}
+
+.title {
+  text-align: center;
+  @include font(700, var(--font-family--genos));
+  color: var(--color--white);
+  font-size: 3.6rem;
+}

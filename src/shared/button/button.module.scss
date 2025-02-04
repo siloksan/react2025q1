@@ -1,0 +1,28 @@
+@use '@styles/mixins' as *;
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 6px;
+  vertical-align: top;
+  color: var(--color--white);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid var(--color--dark-blue);
+  background: var(--color--light-blue);
+
+  &[data-loading] {
+    color: transparent;
+    pointer-events: none;
+  }
+
+  @include hover {
+    background: var(--color--light-blue--hover);
+  }
+}
