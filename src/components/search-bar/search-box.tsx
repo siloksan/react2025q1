@@ -10,6 +10,7 @@ interface State {
 
 interface Props extends ComponentProps<'div'> {
   updateData: (name: string) => void;
+  searchTerm: string;
 }
 
 export default class SearchBox extends React.Component<Props, State> {
@@ -18,14 +19,8 @@ export default class SearchBox extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      searchTerm: this.storageService.getData() ?? '',
+      searchTerm: props.searchTerm,
     };
-  }
-
-  componentDidMount(): void {
-    const { searchTerm } = this.state;
-    const { updateData } = this.props;
-    updateData(searchTerm.trim());
   }
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
