@@ -53,3 +53,7 @@ export interface SpacecraftsResponse {
   sort: { clauses: string[] };
   spacecrafts: Spacecraft[];
 }
+
+export interface SpacecraftResponse {
+  spacecraft: Spacecraft;
+}
