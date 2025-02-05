@@ -15,7 +15,10 @@ export const handlers = [
   http.get('https://stapi.co/api/v2/rest/spacecraft', ({ request }) => {
     const url = new URL(request.url);
 
-    url.searchParams.set('uid', 'test');
+    url.searchParams.set(
+      'uid',
+      DUMMY_SPACECRAFT_DETAILS_RESPONSE.spacecraft.uid.toString()
+    );
 
     return HttpResponse.json(DUMMY_SPACECRAFT_DETAILS_RESPONSE);
   }),
