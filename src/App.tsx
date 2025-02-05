@@ -4,9 +4,6 @@ import { RouterProvider } from 'react-router';
 import routes from './routes/routes';
 
 import './styles/index.scss';
-// export default function App() {
-//   return <RouterProvider router={routes} />;
-// }
 
 export default class App extends Component {
   render() {

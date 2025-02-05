@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ComponentProps, useCallback, useEffect, useState } from 'react';
 import { SpacecraftsResponse } from '../../api/types';
 import { Loader } from '../../shared/loader/loader';
 import { Card } from '../card/card';
@@ -9,12 +9,12 @@ import { QUERY_KEYS } from '../../constants/query-keys';
 import styles from './cards-list.module.scss';
 import { PAGE_OFFSET } from './cards-list.constants';
 
-interface Props {
+interface Props extends ComponentProps<'ul'> {
   readonly data: SpacecraftsResponse | null;
   readonly setData: (data: SpacecraftsResponse | null) => void;
 }
 
-export function CardsList({ data, setData }: Props) {
+export function CardsList({ data, setData, className = '' }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { searchParams } = useQueryState();
@@ -73,5 +73,5 @@ export function CardsList({ data, setData }: Props) {
     ));
   }, [loading, data]);
 
-  return <ul className={styles.list}>{renderList()}</ul>;
+  return <ul className={`${styles.list} ${className}`}>{renderList()}</ul>;
 }

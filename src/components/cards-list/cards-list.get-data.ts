@@ -1,6 +1,11 @@
-import { SpacecraftsResponse } from '../../api/types';
+import {
+  SpaceCraftsRequestPayload,
+  SpacecraftsResponse,
+} from '../../api/types';
 import { requestHandler } from '../../api/utils/request-handler';
+import { API_ROUTES } from '../../api/api-routes';
 import { CARDS_PER_PAGE } from './cards-list.constants';
+import { QueryObject } from '../../utils/createQueryString';
 
 interface RequestParams {
   name: string;
@@ -18,14 +23,18 @@ interface RequestParams {
 export async function getSpacecrafts(params: RequestParams) {
   const { name, pageNumber } = params;
 
-  const payload = { name };
-  const query = { pageNumber, pageSize: CARDS_PER_PAGE };
+  const payload: SpaceCraftsRequestPayload = {
+    name,
+    registry: '',
+    status: '',
+  };
+  const query: QueryObject = { pageNumber, pageSize: CARDS_PER_PAGE };
 
-  const data = await requestHandler<SpacecraftsResponse>(
-    'spacecraft/search',
+  const data = await requestHandler<SpacecraftsResponse>({
+    endpoint: API_ROUTES.STAR_SHIPS,
     payload,
-    query
-  );
+    query,
+  });
 
   return data;
 }
