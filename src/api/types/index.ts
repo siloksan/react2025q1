@@ -49,10 +49,6 @@ export interface Spacecraft {
 }
 
 export interface SpacecraftsResponse {
-  spacecraft: Spacecraft;
-}
-
-export interface SpacecraftsResponse {
   page: Page;
   sort: { clauses: string[] };
   spacecrafts: Spacecraft[];

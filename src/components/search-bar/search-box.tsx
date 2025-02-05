@@ -2,9 +2,11 @@ import React, { ChangeEvent, ComponentProps, useState } from 'react';
 import loupe from './assets/search-icon.svg';
 import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
+import { FIRST_PAGE, PAGE_OFFSET } from '../cards-list/cards-list.constants';
 
 import styles from './search-box.module.scss';
-import { FIRST_PAGE, PAGE_OFFSET } from '../cards-list/cards-list.constants';
+
+export const SEARCH_PLACEHOLDER = 'Search';
 
 export function SearchBox({ className = '' }: ComponentProps<'div'>) {
   const { searchParams, setQueryValue } = useQueryState();
@@ -42,7 +44,7 @@ export function SearchBox({ className = '' }: ComponentProps<'div'>) {
           onKeyDown={handleKeyDown}
           type="text"
           className={styles.input}
-          placeholder="Search"
+          placeholder={SEARCH_PLACEHOLDER}
         />
         <button
           className={styles.button}

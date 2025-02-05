@@ -1,4 +1,4 @@
-import { SpacecraftsResponse } from 'entities/spacecraft/models';
+import { SpacecraftsResponse } from '../../../types';
 
 export const DUMMY_SPACECRAFTS_RESPONSE: SpacecraftsResponse = {
   page: {
