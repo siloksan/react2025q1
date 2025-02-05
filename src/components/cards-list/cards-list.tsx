@@ -5,9 +5,9 @@ import { Card } from '../card/card';
 import { getSpacecrafts } from './cards-list.get-data';
 import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
+import { PAGE_OFFSET } from './cards-list.constants';
 
 import styles from './cards-list.module.scss';
-import { PAGE_OFFSET } from './cards-list.constants';
 
 interface Props extends ComponentProps<'ul'> {
   readonly data: SpacecraftsResponse | null;

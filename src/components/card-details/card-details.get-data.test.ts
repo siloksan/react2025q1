@@ -1,15 +1,15 @@
-import { describe, it, expect, vi, Mock } from 'vitest';
+import { Mock } from 'vitest';
 import { getSpacecraft } from './card-details.get-data';
 import { requestHandler } from '../../api/utils/request-handler';
 import { API_ROUTES } from '../../api/api-routes';
 import { RequestMethod } from '../../api/api-constants';
-import { SpacecraftResponse } from '../../api/types';
+import { DUMMY_SPACECRAFT_DETAILS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftDetailsResponse';
 
 vi.mock('../../api/utils/request-handler');
 
 describe('getSpacecraft', () => {
   it('should fetch spacecraft data successfully', async () => {
-    const mockResponse: SpacecraftResponse = {};
+    const mockResponse = DUMMY_SPACECRAFT_DETAILS_RESPONSE;
     (requestHandler as Mock).mockResolvedValue(mockResponse);
 
     const uid = '123';
