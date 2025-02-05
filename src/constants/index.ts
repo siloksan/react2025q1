@@ -1,1 +1,1 @@
-export * from './image-paths';
+export * from './query-keys';

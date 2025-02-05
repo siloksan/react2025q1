@@ -8,8 +8,8 @@ import styles from './pagination.module.scss';
 const EMPTY_BUTTON_VIEW = '...';
 
 export interface PropsPagination {
-  totalPages: number;
-  currentPage: number;
+  readonly totalPages: number;
+  readonly currentPage: number;
 }
 
 export function Pagination({ totalPages, currentPage }: PropsPagination) {
@@ -23,7 +23,8 @@ export function Pagination({ totalPages, currentPage }: PropsPagination) {
   }
 
   function handleClick(pageNumber: number) {
-    setQueryValue(QUERY_KEYS.PAGE, pageNumber.toString());
+    const newQueries = [{ key: QUERY_KEYS.PAGE, value: pageNumber.toString() }];
+    setQueryValue(newQueries);
   }
 
   const prevBtnDisabled = currentPage === 1;

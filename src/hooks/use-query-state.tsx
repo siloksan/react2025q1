@@ -3,36 +3,44 @@ import { useStorage } from './use-storage';
 import { QUERY_KEYS, QueryKeys } from '../constants/query-keys';
 import { useEffect } from 'react';
 
+interface NewQueries {
+  key: QueryKeys;
+  value: string;
+}
+
 /**
  * Custom hook to manage query parameters in the URL and synchronize them with local storage.
  *
- * @returns {Object} An object containing the current search parameters and a function to set query values.
- * @returns {URLSearchParams} searchParams - The current URL search parameters.
- * @returns {Function} setQueryValue - Function to set a query parameter value.
+ * @returns {Object} An object containing:
+ * - `searchParams`: The current URL search parameters.
+ * - `setQueryValue`: A function to update the query parameters.
  *
  * @example
  * const { searchParams, setQueryValue } = useQueryState();
  *
- * // Set a query parameter
- * setQueryValue('key', 'value');
+ * // To set a query parameter
+ * setQueryValue([{ key: 'exampleKey', value: 'exampleValue' }]);
  *
- * // Get a query parameter
- * const value = searchParams.get('key');
+ * // To remove a query parameter
+ * setQueryValue([{ key: 'exampleKey', value: null }]);
  */
 export function useQueryState() {
   const { getValueFromStorage, setValueInStorage } = useStorage();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  function setQueryValue(key: QueryKeys, value: string) {
+  function setQueryValue(newQueries: NewQueries[]) {
     const newParams = new URLSearchParams(searchParams);
 
-    if (value) {
-      newParams.set(key, value);
-    } else {
-      newParams.delete(key);
-    }
+    newQueries.forEach(({ key, value }) => {
+      if (value) {
+        newParams.set(key, value);
+      } else {
+        newParams.delete(key);
+      }
 
-    setValueInStorage(key, value);
+      setValueInStorage(key, value);
+    });
+
     setSearchParams(newParams);
   }
 
