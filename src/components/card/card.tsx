@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Spacecraft } from '../../api/types';
 import styles from './card.module.scss';
 import { useEffect, useState } from 'react';
@@ -10,9 +10,10 @@ interface Props {
 }
 
 export function Card({ cardInfo }: Props) {
-  const { name, dateStatus = 'unknown', status = 'unknown', uid } = cardInfo;
+  const { name, dateStatus = 'unknown', uid } = cardInfo;
   const { spacecraftId } = useParams();
   const { searchParams } = useQueryState();
+  const navigate = useNavigate();
 
   const [className, setClassName] = useState(`${styles.container}`);
 
@@ -24,21 +25,30 @@ export function Card({ cardInfo }: Props) {
     }
   }, [spacecraftId, uid]);
 
+  function openDetails() {
+    navigate(`${CLIENT_ROUTES.SPACECRAFTS}/${uid}?${searchParams.toString()}`);
+  }
+
+  function closeDetails() {
+    navigate(`/?${searchParams.toString()}`);
+  }
+
+  const handleClick = () => {
+    if (spacecraftId === uid) {
+      closeDetails();
+    } else {
+      openDetails();
+    }
+  };
+
   return (
-    <li className={className}>
-      <Link
-        to={`${CLIENT_ROUTES.SPACECRAFTS}/${uid}?${searchParams.toString()}`}
-      >
-        <h2>
-          <strong>Name:</strong> {name}
-        </h2>
-        <p>
-          <strong>Date of creation:</strong> {dateStatus}
-        </p>
-        <p>
-          <strong>Status:</strong> {status}
-        </p>
-      </Link>
+    <li className={className} onClick={handleClick}>
+      <h2>
+        <strong>Name:</strong> {name}
+      </h2>
+      <p>
+        <strong>Date of creation:</strong> {dateStatus}
+      </p>
     </li>
   );
 }
