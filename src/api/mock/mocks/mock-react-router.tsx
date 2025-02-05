@@ -2,14 +2,17 @@ import { render } from '@testing-library/react';
 import { ComponentType } from 'react';
 import { createRoutesStub } from 'react-router';
 
-export function renderWithReactRouter(
-  Component: ComponentType,
-  baseRoute: string
+export function renderWithReactRouter<T extends Record<string, unknown>>(
+  Component: ComponentType<T>,
+  baseRoute: string,
+  props: T = {} as T // Принимаем props как аргумент
 ) {
   const Stub = createRoutesStub([
     {
       path: baseRoute,
-      Component,
+      Component: () => (
+        <Component {...props} /> // Передаем props в компонент
+      ),
     },
   ]);
 

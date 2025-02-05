@@ -5,7 +5,7 @@ import { EMPTY_BUTTON_VALUE, getButtonsNameArray } from './pagination.utils';
 
 import styles from './pagination.module.scss';
 
-const EMPTY_BUTTON_VIEW = '...';
+export const EMPTY_BUTTON_VIEW = '...';
 
 export interface PropsPagination {
   readonly totalPages: number;
