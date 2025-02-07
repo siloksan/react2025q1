@@ -1,5 +1,5 @@
-import React, {
-  Component,
+import {
+  ComponentProps,
   CSSProperties,
   ElementType,
   PropsWithChildren,
@@ -15,37 +15,32 @@ interface ButtonOwnProps<E extends ElementType = ElementType>
 }
 
 type ButtonProps<E extends ElementType> = ButtonOwnProps<E> &
-  Omit<React.ComponentProps<E>, keyof ButtonOwnProps>;
+  Omit<ComponentProps<E>, keyof ButtonOwnProps>;
 
 const defaultElement = 'button';
 
-export class Button<
-  E extends ElementType = typeof defaultElement,
-> extends Component<ButtonProps<E>> {
-  render() {
-    const {
-      as,
-      className = '',
-      children,
-      loading,
-      customProperties,
-      style,
-      ...rest
-    } = this.props;
+export function Button<E extends ElementType = typeof defaultElement>(
+  props: ButtonProps<E>
+) {
+  const {
+    as,
+    className = '',
+    children,
+    loading,
+    customProperties,
+    style,
+    ...rest
+  } = props;
+  const TagName: ElementType = (as === 'a' ? 'a' : as) ?? defaultElement;
 
-    const TagName: ElementType = (as === 'a' ? 'a' : as) ?? defaultElement;
-
-    return (
-      <TagName
-        className={`${classes.button} ${className}`}
-        data-loading={loading ? '' : undefined}
-        style={{ ...style, ...customProperties }}
-        {...rest}
-      >
-        {children}
-      </TagName>
-    );
-  }
+  return (
+    <TagName
+      className={`${classes.button} ${className}`}
+      data-loading={loading ? '' : undefined}
+      style={{ ...style, ...customProperties }}
+      {...rest}
+    >
+      {children}
+    </TagName>
+  );
 }
-
-export default Button;

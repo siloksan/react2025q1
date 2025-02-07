@@ -1,0 +1,35 @@
+@use '@styles/mixins' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-image: url('./assets/black-hole.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.title {
+  text-align: center;
+  @include font(700, var(--font-family--genos));
+  color: var(--color--white);
+  font-size: 3.6rem;
+}
+
+.description,
+.link {
+  font-size: 2rem;
+  margin: 10px auto;
+  text-align: center;
+  color: var(--color--white);
+}
+
+.link {
+  margin: 10px auto;
+  color: var(--color--light-blue);
+  @include hover {
+    color: var(--color--light-blue--hover);
+  }
+}

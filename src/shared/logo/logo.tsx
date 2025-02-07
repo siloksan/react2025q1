@@ -1,5 +1,5 @@
 import { Component, ComponentProps } from 'react';
-import { PATH_TO_LOGO } from '../../constants';
+import logo_img from './assets/logo.png';
 
 import styles from './logo.module.scss';
 
@@ -9,7 +9,7 @@ interface Props extends ComponentProps<'div'> {
 
 export default class Logo extends Component<Props> {
   render() {
-    const { pathToLogo = PATH_TO_LOGO, className = '' } = this.props;
+    const { pathToLogo = logo_img, className = '' } = this.props;
 
     return (
       <div className={`${styles.container} ${className}`}>

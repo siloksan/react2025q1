@@ -1,26 +1,13 @@
-import { PureComponent } from 'react';
 import Logo from '../../shared/logo/logo';
-import SearchBox from '../search-bar/search-box';
 
 import styles from './header.module.scss';
 
-interface Props {
-  searchTerm: string;
-  updateData: (name: string) => void;
-}
+export const HEADER_TEST_ID = 'header_test_id';
 
-export class Header extends PureComponent<Props> {
-  render() {
-    const { updateData, searchTerm } = this.props;
-    return (
-      <header className={styles.container}>
-        <Logo className={styles.logo} />
-        <SearchBox
-          updateData={updateData}
-          searchTerm={searchTerm}
-          className={styles.search_box}
-        />
-      </header>
-    );
-  }
+export function Header() {
+  return (
+    <header className={styles.container} data-testid={HEADER_TEST_ID}>
+      <Logo className={styles.logo} />
+    </header>
+  );
 }

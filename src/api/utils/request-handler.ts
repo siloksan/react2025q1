@@ -1,34 +1,51 @@
+import { API_HEADER, RequestMethod } from '../api-constants';
+import { ApiRoutes, BASE_URL } from '../api-routes';
+import { isNullable } from '../../utils';
 import { createQueryString, QueryObject } from '../../utils/createQueryString';
+import { Payload } from '../types';
 
-const BASE_URL = 'https://stapi.co/api/v2/rest/';
+function handleBody(data: Payload | undefined) {
+  return isNullable(data) ? undefined : createQueryString(data);
+}
+
+interface RequestParams {
+  endpoint: ApiRoutes;
+  payload?: Payload;
+  query?: QueryObject;
+}
+
+export interface FetchOptions extends RequestInit {
+  method?: RequestMethod;
+  headers?: HeadersInit;
+}
 
 /**
- * Makes a POST request to the specified endpoint using the provided payload and query parameters.
+ * Handles HTTP requests to a specified endpoint with given parameters and options.
  *
- * @param endpoint The endpoint to make the request to.
- * @param payload The payload to send in the request body.
- * @param query The query parameters to send in the URL.
- * @returns The response data if the request was successful, otherwise `undefined`.
+ * @template T - The expected response type.
+ * @param {RequestParams} params - The parameters for the request.
+ * @param {FetchOptions} [options={}] - Optional fetch options such as method and headers.
+ * @returns {Promise<T>} - A promise that resolves to the response data of type T.
+ * @throws {Error} - Throws an error if the response status is not ok.
  */
 export async function requestHandler<T>(
-  endpoint: string,
-  payload: QueryObject,
-  query: QueryObject
+  params: RequestParams,
+  options: FetchOptions = {}
 ): Promise<T> {
-  const newPayload = {
-    name: payload.name,
-    registry: '',
-    status: '',
-  };
+  const { endpoint, payload, query } = params;
+  const { method = RequestMethod.POST, headers = API_HEADER } = options;
 
-  const response = await fetch(
-    `${BASE_URL}${endpoint}?${createQueryString(query)}`,
-    {
-      method: 'POST',
-      body: createQueryString(newPayload),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    }
-  );
+  let fetchURL = `${BASE_URL}${endpoint}`;
+
+  if (query) {
+    fetchURL += `?${createQueryString(query)}`;
+  }
+
+  const response = await fetch(fetchURL, {
+    method,
+    body: handleBody(payload),
+    headers,
+  });
 
   if (!response.ok) {
     throw new Error(`Failed to fetch data! Status: ${response.status}`);

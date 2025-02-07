@@ -1,79 +1,77 @@
-import { Component } from 'react';
+import { ComponentProps, useCallback, useEffect, useState } from 'react';
 import { SpacecraftsResponse } from '../../api/types';
-import Loader from '../../shared/loader/loader';
-import Card from '../card/card';
+import { Loader } from '../../shared/loader/loader';
+import { Card } from '../card/card';
+import { getSpacecrafts } from './cards-list.get-data';
+import { useQueryState } from '../../hooks/use-query-state';
+import { QUERY_KEYS } from '../../constants/query-keys';
+import { PAGE_OFFSET } from './cards-list.constants';
 
 import styles from './cards-list.module.scss';
-import { getSpacecrafts } from './cards-list.get-data';
 
-interface Props {
-  searchTerm: string;
+interface Props extends ComponentProps<'ul'> {
+  readonly data: SpacecraftsResponse | null;
+  readonly setData: (data: SpacecraftsResponse | null) => void;
 }
 
-interface State {
-  data: SpacecraftsResponse | null;
-  loading: boolean;
-  error: string | null;
-}
+export function CardsList({ data, setData, className = '' }: Props) {
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const { searchParams } = useQueryState();
+  const searchTerm = searchParams.get(QUERY_KEYS.NAME) ?? '';
+  const pageNumber =
+    Number(searchParams.get(QUERY_KEYS.PAGE) ?? 1) - PAGE_OFFSET;
 
-export class CardsList extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      data: null,
-      error: null,
-      loading: false,
-    };
-  }
+  useEffect(() => {
+    let isMounted = true;
 
-  componentDidMount() {
-    this.updateData(this.props.searchTerm);
-  }
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const result = await getSpacecrafts({
+          name: searchTerm,
+          pageNumber: Number(pageNumber),
+        });
 
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.searchTerm !== this.props.searchTerm) {
-      this.updateData(this.props.searchTerm);
-    }
-  }
-
-  public updateData = async (name: string) => {
-    this.setState({ data: null, loading: true });
-
-    try {
-      const data = await getSpacecrafts({
-        name: name,
-      });
-
-      this.setState({ data });
-    } catch (error) {
-      if (error instanceof Error) {
-        this.setState({ error: error.message });
+        if (isMounted) {
+          setData(result);
+          setError(null);
+        }
+      } catch (error) {
+        if (isMounted) {
+          setError(error instanceof Error ? error.message : 'Unknown error');
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-    } finally {
-      this.setState({ loading: false });
-    }
-  };
-  render() {
-    const { data, error, loading } = this.state;
-
-    if (error) {
-      throw new Error(error);
-    }
-
-    const renderList = () => {
-      if (loading) {
-        return <Loader />;
-      }
-
-      if (!data || data.spacecrafts.length === 0) {
-        return <h1 className={styles.not_found}>No spacecrafts found</h1>;
-      }
-
-      return data.spacecrafts.map((card) => {
-        return <Card cardInfo={card} key={card.uid} />;
-      });
     };
 
-    return <ul className={styles.list}>{renderList()}</ul>;
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [searchTerm, pageNumber]);
+
+  if (error) {
+    throw new Error(error);
   }
+
+  const renderList = useCallback(() => {
+    if (loading) {
+      return <Loader />;
+    }
+
+    if (!data?.spacecrafts?.length) {
+      return <h1 className={styles.not_found}>No spacecrafts found</h1>;
+    }
+
+    return data.spacecrafts.map((card) => (
+      <Card cardInfo={card} key={card.uid} />
+    ));
+  }, [loading, data]);
+
+  return <ul className={`${styles.list} ${className}`}>{renderList()}</ul>;
 }

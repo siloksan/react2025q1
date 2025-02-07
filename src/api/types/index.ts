@@ -1,7 +1,11 @@
-export interface Payload {
+import { QueryObject } from '../../utils/createQueryString';
+
+export type Payload = SpaceCraftsRequestPayload;
+
+export interface SpaceCraftsRequestPayload extends QueryObject {
   name: string;
-  registry: string;
-  status: string;
+  registry: '';
+  status: '';
 }
 
 export interface Page {
@@ -48,4 +52,8 @@ export interface SpacecraftsResponse {
   page: Page;
   sort: { clauses: string[] };
   spacecrafts: Spacecraft[];
+}
+
+export interface SpacecraftResponse {
+  spacecraft: Spacecraft;
 }
