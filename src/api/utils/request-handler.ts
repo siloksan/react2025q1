@@ -1,7 +1,10 @@
 import { API_HEADER, RequestMethod } from '../api-constants';
 import { ApiRoutes, BASE_URL } from '../api-routes';
 import { isNullable } from '../../utils';
-import { createQueryString, QueryObject } from '../../utils/createQueryString';
+import {
+  createQueryString,
+  QueryObject,
+} from '../../utils/create-query-string';
 import { Payload } from '../types';
 
 export function handleBody(data: Payload | undefined) {

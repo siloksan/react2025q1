@@ -1,4 +1,4 @@
-import { QueryObject } from '../../utils/createQueryString';
+import { QueryObject } from '../../utils/create-query-string';
 
 export type Payload = SpaceCraftsRequestPayload;
 
