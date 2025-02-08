@@ -17,7 +17,7 @@ export function CardsList({ className = '' }: ComponentProps<'ul'>) {
   const pageNumber =
     Number(searchParams.get(QUERY_KEYS.PAGE) ?? FIRST_PAGE) - PAGE_OFFSET;
 
-  const { data, isLoading, isError, error } = useGetCardsQuery({
+  const { data, isFetching, isError, error } = useGetCardsQuery({
     name: searchTerm,
     pageNumber,
   });
@@ -33,7 +33,7 @@ export function CardsList({ className = '' }: ComponentProps<'ul'>) {
   }
 
   const renderList = useCallback(() => {
-    if (isLoading) {
+    if (isFetching) {
       return <Loader />;
     }
 
@@ -44,7 +44,7 @@ export function CardsList({ className = '' }: ComponentProps<'ul'>) {
     return data.spacecrafts.map((card) => (
       <Card cardInfo={card} key={card.uid} />
     ));
-  }, [isLoading, data]);
+  }, [isFetching, data]);
 
   return <ul className={`${styles.list} ${className}`}>{renderList()}</ul>;
 }

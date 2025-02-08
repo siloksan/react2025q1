@@ -9,7 +9,7 @@ export default function CardDetails() {
   const { spacecraftId } = useParams();
   const { searchParams } = useQueryState();
   const navigate = useNavigate();
-  const { data, isLoading, isError, error } = useGetCardDetailsQuery(
+  const { data, isFetching, isError, error } = useGetCardDetailsQuery(
     spacecraftId ?? ''
   );
 
@@ -21,7 +21,7 @@ export default function CardDetails() {
     throw error;
   }
 
-  if (isLoading) {
+  if (isFetching) {
     return <Loader />;
   }
 
