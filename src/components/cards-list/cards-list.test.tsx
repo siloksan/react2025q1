@@ -4,7 +4,7 @@ import { CardsList } from './cards-list';
 import { useQueryState } from '../../hooks/use-query-state';
 import { getSpacecrafts } from './cards-list.get-data';
 import { DUMMY_SPACECRAFTS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftsResponse';
-import { LOADER_TEST_ID } from '../../shared/loader/loader';
+import { LOADER_TEST_ID } from '../shared/loader/loader';
 
 vi.mock('../../hooks/use-query-state', () => ({
   useQueryState: vi.fn(),

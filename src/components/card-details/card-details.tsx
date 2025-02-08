@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getSpacecraft } from './card-details.get-data';
-import { Loader } from '../../shared/loader/loader';
+import { Loader } from '../shared/loader/loader';
 import { Spacecraft } from '../../api/types';
 import { useQueryState } from '../../hooks/use-query-state';
 import { useNavigate, useParams } from 'react-router';
+import { getSpacecraft } from '../../api/services';
 
 import styles from './card-details.module.scss';
 

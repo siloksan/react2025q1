@@ -1,11 +1,11 @@
 import { ComponentProps, useCallback, useEffect, useState } from 'react';
 import { SpacecraftsResponse } from '../../api/types';
-import { Loader } from '../../shared/loader/loader';
+import { Loader } from '../shared/loader/loader';
 import { Card } from '../card/card';
-import { getSpacecrafts } from './cards-list.get-data';
 import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
 import { PAGE_OFFSET } from './cards-list.constants';
+import { getSpacecrafts } from '../../api/services';
 
 import styles from './cards-list.module.scss';
 

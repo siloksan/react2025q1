@@ -1,4 +1,4 @@
-import Logo from '../../shared/logo/logo';
+import Logo from '../shared/logo/logo';
 
 import styles from './header.module.scss';
 

@@ -1,6 +1,6 @@
 import { QUERY_KEYS } from '../../constants/query-keys';
 import { useQueryState } from '../../hooks/use-query-state';
-import { Button } from '../../shared/button/button';
+import { Button } from '../shared/button/button';
 import { EMPTY_BUTTON_VALUE, getButtonsNameArray } from './pagination.utils';
 
 import styles from './pagination.module.scss';
