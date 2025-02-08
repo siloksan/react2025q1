@@ -18,9 +18,7 @@ export function SearchBox({ className = '' }: ComponentProps<'div'>) {
     setTerm(value);
   }
 
-  console.log('setTerm: ', setTerm);
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    console.log('key handler');
     if (event.key === 'Enter') {
       handleSubmit();
     }
