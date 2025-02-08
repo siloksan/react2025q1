@@ -57,3 +57,8 @@ export interface SpacecraftsResponse {
 export interface SpacecraftResponse {
   spacecraft: Spacecraft;
 }
+
+export interface SpaceCraftsRequestParams {
+  name: string;
+  pageNumber: number;
+}
