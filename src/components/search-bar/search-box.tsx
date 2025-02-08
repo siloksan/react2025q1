@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ComponentProps, useState } from 'react';
+import React, { ChangeEvent, ComponentProps, useEffect, useState } from 'react';
 import loupe from './assets/search-icon.svg';
 import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
@@ -34,6 +34,10 @@ export function SearchBox({ className = '' }: ComponentProps<'div'>) {
 
     setQueryValue(newQueries);
   };
+
+  useEffect(() => {
+    setTerm(initSearchTerm);
+  }, [initSearchTerm]);
 
   return (
     <div className={`${styles.container} ${className}`}>
