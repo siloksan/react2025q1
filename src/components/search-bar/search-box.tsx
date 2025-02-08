@@ -1,4 +1,10 @@
-import React, { ChangeEvent, ComponentProps, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  ComponentProps,
+  KeyboardEvent,
+  useEffect,
+  useState,
+} from 'react';
 import loupe from './assets/search-icon.svg';
 import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
@@ -18,7 +24,7 @@ export function SearchBox({ className = '' }: ComponentProps<'div'>) {
     setTerm(value);
   }
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
       handleSubmit();
     }
