@@ -1,21 +1,19 @@
-import ErrorBoundary from '../../shared/errorBoundary/ErrorBoundary';
+import ErrorBoundary from '../../components/shared/errorBoundary/ErrorBoundary';
 import { ErrorButton } from './components/error-button/error-button';
 import { SearchBox } from '../../components/search-bar/search-box';
 import { Pagination } from '../../components/pagination/pagination';
-
-import { useState } from 'react';
-import { SpacecraftsResponse } from '../../api/types';
-import {
-  FIRST_PAGE,
-  PAGE_OFFSET,
-} from '../../components/cards-list/cards-list.constants';
+import { PAGE_OFFSET } from '../../components/cards-list/cards-list.constants';
 import { CardsBlock } from './components/cards-block/cards-block';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
 
 import styles from './main.module.scss';
 
 export function Main() {
-  const [data, setData] = useState<SpacecraftsResponse | null>(null);
-  const { totalPages = 0, pageNumber = FIRST_PAGE } = data?.page ?? {};
+  const cardsList = useSelector((state: RootState) => state.cardsList.value);
+  const {
+    page: { pageNumber, totalPages },
+  } = cardsList;
 
   return (
     <main className={styles.main}>
@@ -26,7 +24,7 @@ export function Main() {
           totalPages={totalPages}
         />
         <SearchBox />
-        <CardsBlock data={data} setData={setData} />
+        <CardsBlock />
       </ErrorBoundary>
       <ErrorButton />
     </main>

@@ -11,11 +11,8 @@ export interface SpaceCraftsRequestPayload extends QueryObject {
 export interface Page {
   pageNumber: number;
   pageSize: number;
-  numberOfElements: number;
   totalElements: number;
   totalPages: number;
-  firstPage: boolean;
-  lastPage: boolean;
 }
 
 interface Option {
@@ -50,7 +47,6 @@ export interface Spacecraft {
 
 export interface SpacecraftsResponse {
   page: Page;
-  sort: { clauses: string[] };
   spacecrafts: Spacecraft[];
 }
 

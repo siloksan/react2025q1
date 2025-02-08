@@ -4,7 +4,7 @@ import { isNullable } from '../../utils';
 import { createQueryString, QueryObject } from '../../utils/createQueryString';
 import { Payload } from '../types';
 
-function handleBody(data: Payload | undefined) {
+export function handleBody(data: Payload | undefined) {
   return isNullable(data) ? undefined : createQueryString(data);
 }
 

@@ -47,8 +47,4 @@ export const rootApi = createApi({
   }),
 });
 
-export const {
-  useGetCardsQuery,
-  useGetCardDetailsQuery,
-  useLazyGetCardsQuery,
-} = rootApi;
+export const { useGetCardsQuery, useGetCardDetailsQuery } = rootApi;
