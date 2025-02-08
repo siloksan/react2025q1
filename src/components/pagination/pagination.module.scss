@@ -9,7 +9,7 @@
 }
 
 .button {
-  background-color: var(--color--dark-blue);
+  background-color: var(--color--shared-bg);
   min-width: 50px;
   padding: 6px;
   font-size: 1.3rem;
@@ -23,17 +23,17 @@
 }
 
 .disabled {
-  background-color: var(--color--light-blue--disabled);
+  background-color: var(--color--main-bg--disabled);
 
   @include hover {
-    background-color: var(--color--light-blue--disabled);
+    background-color: var(--color--main-bg--disabled);
   }
 }
 
 .current {
-  background-color: var(--color--light-blue);
+  background-color: var(--color--main-bg);
 
   @include hover {
-    background-color: var(--color--light-blue);
+    background-color: var(--color--main-bg);
   }
 }

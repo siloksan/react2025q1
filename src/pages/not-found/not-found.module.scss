@@ -14,7 +14,7 @@
 .title {
   text-align: center;
   @include font(700, var(--font-family--genos));
-  color: var(--color--white);
+  color: var(--color--main-text);
   font-size: 3.6rem;
 }
 
@@ -23,13 +23,13 @@
   font-size: 2rem;
   margin: 10px auto;
   text-align: center;
-  color: var(--color--white);
+  color: var(--color--main-text);
 }
 
 .link {
   margin: 10px auto;
-  color: var(--color--light-blue);
+  color: var(--color--main-bg);
   @include hover {
-    color: var(--color--light-blue--hover);
+    color: var(--color--main-bg--hover);
   }
 }

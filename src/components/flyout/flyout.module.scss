@@ -5,11 +5,11 @@
   margin: 20px auto;
   padding: 10px;
   border-radius: 20px;
-  color: var(--color--white);
+  color: var(--color--main-text);
   top: 0;
   z-index: 9;
   min-width: 380px;
-  background-color: var(--color--wheat);
+  background-color: var(--color--card);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,6 +48,7 @@
     transform: translateY(0);
   }
 }
+
 @keyframes hide {
   from {
     transform: translateY(0);

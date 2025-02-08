@@ -11,8 +11,8 @@ export function Flyout() {
     (state: RootState) => state.selectedCards.value
   );
   const dispatch = useDispatch();
-  const isShown = selectedCards.length > 0;
   const numberOfCards = selectedCards.length;
+  const isShown = numberOfCards > 0;
 
   if (!isShown) return null;
 

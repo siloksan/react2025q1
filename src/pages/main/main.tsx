@@ -48,11 +48,11 @@ export function Main() {
             />
             <SearchBox />
             <CardsBlock />
+            <Flyout />
           </div>
         </ErrorBoundary>
         <ErrorButton />
       </main>
-      <Flyout />
     </div>
   );
 }
