@@ -5,10 +5,10 @@ import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
 import { FIRST_PAGE, PAGE_OFFSET } from './cards-list.constants';
 import { useGetCardsQuery } from '../../api/api-root';
-
-import styles from './cards-list.module.scss';
 import { setCardsList } from '../../store/features';
 import { useDispatch } from 'react-redux';
+
+import styles from './cards-list.module.scss';
 
 export function CardsList({ className = '' }: ComponentProps<'ul'>) {
   const { searchParams } = useQueryState();

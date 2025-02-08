@@ -17,9 +17,9 @@ const selectedCardsSlice = createSlice({
     selectCard: (state, action: PayloadAction<Spacecraft>) => {
       state.value.push(action.payload);
     },
-    removeCard: (state, action: PayloadAction<Spacecraft>) => {
+    removeCard: (state, action: PayloadAction<Spacecraft['uid']>) => {
       const filtered = state.value.filter(
-        (item) => item.uid !== action.payload.uid
+        (item) => item.uid !== action.payload
       );
       state.value = filtered;
     },
