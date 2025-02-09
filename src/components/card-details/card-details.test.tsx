@@ -22,10 +22,6 @@ vi.mock('../../hooks/use-query-state', () => ({
   useQueryState: vi.fn(),
 }));
 
-vi.mock('./card-details.get-data', () => ({
-  getSpacecraft: vi.fn(),
-}));
-
 describe('CardDetails', () => {
   const navigate = vi.fn();
   const params = {
@@ -38,6 +34,7 @@ describe('CardDetails', () => {
   const isError = false;
 
   beforeEach(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => vi.fn());
     (useNavigate as Mock).mockReturnValue(navigate);
     (useParams as Mock).mockReturnValue(params);
     (useQueryState as Mock).mockReturnValue({
@@ -105,7 +102,7 @@ describe('CardDetails', () => {
       error,
     });
 
-    expect(() => render(<CardDetails />)).toThrow(errorMsg);
+    expect(() => render(<CardDetails />)).toThrowError(error);
   });
 
   it('should return null when there is no data', () => {

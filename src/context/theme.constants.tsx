@@ -1,4 +1,4 @@
-export const THEME_LOCALSTORAGE_QEY = 'theme';
+export const THEME_LOCALSTORAGE_KEY = 'theme';
 
 export enum Themes {
   dark = 'dark',

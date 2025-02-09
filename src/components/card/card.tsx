@@ -9,6 +9,8 @@ import { removeCard, selectCard } from '../../store/features';
 
 import styles from './card.module.scss';
 
+export const CARD_TESTID = 'card_testid';
+
 interface Props {
   readonly cardInfo: Spacecraft;
 }
@@ -61,7 +63,11 @@ export function Card({ cardInfo }: Props) {
   const isChecked = selectedCards.some((card) => uid === card.uid);
 
   return (
-    <li className={containerClassName} onClick={handleClick}>
+    <li
+      className={containerClassName}
+      onClick={handleClick}
+      data-testid={CARD_TESTID}
+    >
       <input
         className={styles.checkbox}
         type="checkbox"
