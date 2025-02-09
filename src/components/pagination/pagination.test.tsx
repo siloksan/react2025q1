@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
 import { EMPTY_BUTTON_VIEW, Pagination } from './pagination';
 import { renderWithReactRouter } from '../../api/mock/mocks/mock-react-router';
-import { CLIENT_ROUTES } from '../../routes/routes';
 import { useQueryState } from '../../hooks/use-query-state';
 import userEvent from '@testing-library/user-event';
 import { QUERY_KEYS } from '../../constants';
 import { PAGE_OFFSET } from '../cards-list/cards-list.constants';
+import { CLIENT_ROUTES } from '../../routes/routes.constant';
 
 const initialRoute = `/`;
 
