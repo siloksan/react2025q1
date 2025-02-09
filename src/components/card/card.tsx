@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router';
 import { Spacecraft } from '../../api/types';
 import { useQueryState } from '../../hooks/use-query-state';
-import { CLIENT_ROUTES } from '../../routes/routes';
+import { CLIENT_ROUTES } from '../../routes/routes.constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { ComponentProps } from 'react';

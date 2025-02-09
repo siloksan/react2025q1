@@ -2,12 +2,7 @@ import { createBrowserRouter } from 'react-router';
 import Layout from '../layout/layout';
 import NotFoundPage from '../pages/not-found/not-found';
 import CardDetails from '../components/card-details/card-details';
-
-export const CLIENT_ROUTES = {
-  HOME: '/',
-  SPACECRAFTS: '/spacecrafts',
-  SPACECRAFTS_DETAILS: '/spacecrafts/:spacecraftId',
-};
+import { CLIENT_ROUTES } from './routes.constant';
 
 export const routesConfig = [
   {
@@ -20,5 +15,4 @@ export const routesConfig = [
   },
 ];
 
-const routes = createBrowserRouter(routesConfig);
-export default routes;
+export const routes = createBrowserRouter(routesConfig);

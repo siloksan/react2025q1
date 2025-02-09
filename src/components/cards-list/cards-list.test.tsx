@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Mock } from 'vitest';
 import { CardsList } from './cards-list';
 import { useQueryState } from '../../hooks/use-query-state';
@@ -63,7 +63,7 @@ describe('CardsList', () => {
       error: null,
     });
 
-    render(<CardsList />);
+    const screen = render(<CardsList />);
     expect(screen.getByTestId(LOADER_TEST_ID)).toBeInTheDocument();
   });
 
@@ -75,12 +75,13 @@ describe('CardsList', () => {
       error: null,
     });
 
-    render(<CardsList />);
+    const screen = render(<CardsList />);
     expect(screen.getByText('No spacecrafts found')).toBeInTheDocument();
   });
 
   it('renders list of cards when data is available', async () => {
-    render(<CardsList />);
+    const screen = render(<CardsList />);
+
     data.spacecrafts.forEach((card) => {
       expect(
         screen.getByRole('heading', { name: card.uid })
