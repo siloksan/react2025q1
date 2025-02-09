@@ -9,9 +9,9 @@ import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import { useQueryState } from '../../hooks/use-query-state';
 import { useNavigate } from 'react-router';
+import { Flyout } from '../../components/flyout/flyout';
 
 import styles from './main.module.scss';
-import { Flyout } from '../../components/flyout/Flyout';
 
 export function Main() {
   const cardsList = useSelector((state: RootState) => state.cardsList.value);

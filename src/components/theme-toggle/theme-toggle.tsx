@@ -1,15 +1,16 @@
 import { Themes } from '../../context/theme.constants';
 import { useThemeContext } from '../../context/theme.context';
+import { WithTestId } from '../../types';
 
 import styles from './theme-toggle.module.scss';
 
-export function ThemeToggle() {
+export function ThemeToggle({ testid }: WithTestId) {
   const { theme, toggleTheme } = useThemeContext();
 
   const isDark = theme === Themes.dark;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid={testid}>
       Light
       <div>
         <input
