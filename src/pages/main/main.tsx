@@ -3,13 +3,13 @@ import { ErrorButton } from './components/error-button/error-button';
 import { SearchBox } from '../../components/search-bar/search-box';
 import { Pagination } from '../../components/pagination/pagination';
 import { MouseEventHandler, useRef } from 'react';
-import { PAGE_OFFSET } from '../../components/cards-list/cards-list.constants';
 import { CardsBlock } from './components/cards-block/cards-block';
+import { Flyout } from '../../components/flyout/flyout';
+import { PAGE_OFFSET } from '../../components/cards-list/cards-list.constants';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import { useQueryState } from '../../hooks/use-query-state';
 import { useNavigate } from 'react-router';
-import { Flyout } from '../../components/flyout/flyout';
 
 import styles from './main.module.scss';
 
