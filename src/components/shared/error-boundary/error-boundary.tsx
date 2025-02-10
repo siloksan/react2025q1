@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './ErrorBoundary.module.scss';
+import styles from './error-boundary.module.scss';
 
 export const ERROR_BOUNDARY_TEST_ID = 'error-boundary';
 

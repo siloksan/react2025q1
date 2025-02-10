@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 import { CardsList } from '../../../../components/cards-list/cards-list';
-import { ErrorBoundary } from '../../../../components/shared/errorBoundary/ErrorBoundary';
+import { ErrorBoundary } from '../../../../components/shared/error-boundary/error-boundary';
 
 import styles from './cards-block.module.scss';
 
