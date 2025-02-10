@@ -6,8 +6,10 @@ describe('useStorage', () => {
   beforeEach(() => {
     localStorage.clear();
   });
+
   const key = THEME_LOCALSTORAGE_KEY;
   const themeValue = Themes.light;
+
   it('should get value from localStorage', () => {
     localStorage.setItem(key, themeValue);
 
