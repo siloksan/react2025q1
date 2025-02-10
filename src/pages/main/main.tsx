@@ -1,4 +1,4 @@
-import ErrorBoundary from '../../components/shared/errorBoundary/ErrorBoundary';
+import { ErrorBoundary } from '../../components/shared/errorBoundary/ErrorBoundary';
 import { ErrorButton } from './components/error-button/error-button';
 import { SearchBox } from '../../components/search-bar/search-box';
 import { Pagination } from '../../components/pagination/pagination';

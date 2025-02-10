@@ -12,7 +12,7 @@ interface State {
   errorInfo: React.ErrorInfo | null;
 }
 
-class ErrorBoundary extends React.Component<Props, State> {
+export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { error: null, errorInfo: null };
@@ -48,5 +48,3 @@ class ErrorBoundary extends React.Component<Props, State> {
     return children;
   }
 }
-
-export default ErrorBoundary;
