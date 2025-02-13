@@ -1,4 +1,5 @@
 import { MouseEventHandler, useRef } from 'react';
+import { CardsBlock } from './components/cards-block/cards-block';
 
 import styles from './main.module.scss';
 
@@ -35,7 +36,7 @@ export function Main() {
               totalPages={totalPages}
             /> */}
           {/* <SearchBox /> */}
-          {/* <CardsBlock /> */}
+          <CardsBlock />
           {/* <Flyout /> */}
         </div>
       </main>

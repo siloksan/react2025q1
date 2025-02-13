@@ -1,5 +1,5 @@
 import { COOKIE_KEYS, CookieKeys } from '@/constants/cookie';
-import { Themes } from '@/context/theme.constants';
+import { Themes } from '@/context/theme-context/theme.constants';
 import { ServerResponse } from 'http';
 import { GetServerSidePropsContext } from 'next';
 

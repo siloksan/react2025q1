@@ -1,5 +1,5 @@
 import { HTTP_CODES, HTTP_ERRORS, RequestMethod } from '@/api/api-constants';
-import { Themes } from '@/context/theme.constants';
+import { Themes } from '@/context/theme-context/theme.constants';
 import { NextApiRequestWithBody } from '@/types';
 import { ServerCookieManager } from '@/utils/server-cookie-manager';
 import { NextApiResponse } from 'next';

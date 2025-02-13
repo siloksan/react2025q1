@@ -7,7 +7,7 @@ interface Props extends PropsWithChildren {
 }
 
 export function CardsProvider(props: Props) {
-  const [cards, setCards] = useState<SpacecraftsResponse | null>(null);
+  const [cards, setCards] = useState<SpacecraftsResponse | null>(props.cards);
 
   const value = useMemo(
     () => ({

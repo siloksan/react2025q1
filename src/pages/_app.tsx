@@ -1,6 +1,8 @@
-import { ThemeProvider } from '@/context/theme.provider';
 import type { AppProps } from 'next/app';
 import { HomeProps } from '.';
+import { ErrorBoundary } from '@/components/shared/error-boundary/error-boundary';
+import { ThemeProvider } from '@/context/theme-context/theme.provider';
+import { CardsProvider } from '@/context/cards-context/cards.provider';
 
 import '@/styles/index.scss';
 
@@ -10,11 +12,14 @@ interface AppHomeProps extends AppProps {
 
 export default function App({ Component, pageProps: props }: AppHomeProps) {
   const { theme, cards } = props;
-  console.log('cards: ', cards);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Component pageProps={props} />
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <CardsProvider cards={cards}>
+          <Component {...props} />
+        </CardsProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
