@@ -1,8 +1,8 @@
 import { Mock } from 'vitest';
 import { ThemeToggle } from './theme-toggle';
-import { Themes } from '../../context/theme.constants';
-import { useThemeContext } from '../../context/theme.context';
 import { render } from '@testing-library/react';
+import { useThemeContext } from '@/context/theme-context/theme.context';
+import { Themes } from '@/context/theme-context/theme.constants';
 
 vi.mock('../../context/theme.context');
 
