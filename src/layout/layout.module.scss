@@ -1,0 +1,11 @@
+.layout {
+  background-image: url('../assets/images/background_2.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: all 1s ease-in-out;
+
+  &[data-theme='dark'] {
+    background-image: url('../assets/images/background_1.jpg');
+  }
+}
