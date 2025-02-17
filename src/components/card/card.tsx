@@ -1,18 +1,13 @@
-// import { useNavigate, useParams } from 'react-router';
 import { useRouter } from 'next/router';
 import { Spacecraft } from '../../api/types';
-// import { useQueryState } from '../../hooks/use-query-state';
-// import { CLIENT_ROUTES } from '../../routes/routes.constant';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { RootState } from '../../store/store';
-// import { ComponentProps } from 'react';
-// import { removeCard, selectCard } from '../../store/features';
-
-import styles from './card.module.scss';
 import { BROWSER_ROUTES } from '@/api/routes';
 import { omitKeyFromObject } from '@/utils/omit-key-from-object';
-import { useAppDispatch } from '@/store/store.hooks';
-import { setDetailsLoading } from '@/store/features';
+import { useAppDispatch, useAppSelector } from '@/store/store.hooks';
+import { removeCard, selectCard, setDetailsLoading } from '@/store/features';
+import { AppState } from '@/store/store.types';
+import { ComponentProps } from 'react';
+
+import styles from './card.module.scss';
 
 export const CARD_TESTID = 'card_testid';
 
@@ -26,9 +21,9 @@ export function Card({ cardInfo }: Props) {
   const router = useRouter();
   const { query } = router;
 
-  // const selectedCards = useSelector(
-  //   (state: RootState) => state.selectedCards.value
-  // );
+  const selectedCards = useAppSelector(
+    (state: AppState) => state.selectedCards.value
+  );
 
   let containerClassName = `${styles.container}`;
   const cardId = cardInfo.uid;
@@ -63,19 +58,19 @@ export function Card({ cardInfo }: Props) {
     }
   };
 
-  // const handleCheck: ComponentProps<'input'>['onClick'] = (e) => {
-  //   e.stopPropagation();
-  //   if (e.target instanceof HTMLInputElement) {
-  //     const { checked } = e.target;
-  //     if (checked) {
-  //       dispatch(selectCard(cardInfo));
-  //     } else {
-  //       dispatch(removeCard(uid));
-  //     }
-  //   }
-  // };
+  const handleCheck: ComponentProps<'input'>['onClick'] = (e) => {
+    e.stopPropagation();
+    if (e.target instanceof HTMLInputElement) {
+      const { checked } = e.target;
+      if (checked) {
+        dispatch(selectCard(cardInfo));
+      } else {
+        dispatch(removeCard(cardId));
+      }
+    }
+  };
 
-  // const isChecked = selectedCards.some((card) => uid === card.uid);
+  const isChecked = selectedCards.some((card) => cardId === card.uid);
 
   return (
     <li
@@ -86,8 +81,8 @@ export function Card({ cardInfo }: Props) {
       <input
         className={styles.checkbox}
         type="checkbox"
-        // onClick={handleCheck}
-        // checked={isChecked}
+        onClick={handleCheck}
+        checked={isChecked}
         onChange={() => {}}
       />
       <h2>

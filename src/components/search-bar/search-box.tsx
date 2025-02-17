@@ -6,12 +6,14 @@ import { FIRST_PAGE, PAGE_OFFSET } from '../cards-list/cards-list.constants';
 import Image from 'next/image';
 
 import styles from './search-box.module.scss';
+import { setLoading } from '@/store/features';
+import { useAppDispatch } from '@/store/store.hooks';
 
 export const SEARCH_PLACEHOLDER = 'Search';
 
 export function SearchBox({ className = '' }: ComponentProps<'div'>) {
   const { searchParams, setQueryValue } = useQueryState();
-  console.log('searchParams: ', searchParams);
+  const dispatch = useAppDispatch();
   const initSearchTerm = searchParams?.[QUERY_KEYS.NAME] ?? '';
   const [term, setTerm] = useState(initSearchTerm as string);
 
@@ -28,6 +30,8 @@ export function SearchBox({ className = '' }: ComponentProps<'div'>) {
 
   // setup current page on the first page when the search term is changed
   const handleSubmit = () => {
+    dispatch(setLoading(true));
+
     const firstPage = (FIRST_PAGE + PAGE_OFFSET).toString();
     const newQueries = [
       { key: QUERY_KEYS.PAGE, value: firstPage },

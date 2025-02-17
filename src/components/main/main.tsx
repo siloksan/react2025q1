@@ -12,6 +12,7 @@ import { omitKeyFromObject } from '@/utils';
 import { BROWSER_ROUTES } from '@/api/routes';
 import { useRouter } from 'next/router';
 import { SearchBox } from '../search-bar/search-box';
+import { Flyout } from '../flyout/flyout';
 
 import styles from './main.module.scss';
 
@@ -69,7 +70,7 @@ export function Main() {
                 totalPages={totalPages}
                 handleClick={handlePageChange}
               />
-              {/* <Flyout /> */}
+              <Flyout />
             </>
           )}
         </div>
