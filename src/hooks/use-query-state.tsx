@@ -25,7 +25,7 @@ interface NewQueries {
  * setQueryValue([{ key: 'exampleKey', value: null }]);
  */
 export function useQueryState() {
-  const { getValueFromStorage, setValueInStorage } = useStorage();
+  const { setValueInStorage } = useStorage();
   const router = useRouter();
 
   const { query } = router;
@@ -43,6 +43,7 @@ export function useQueryState() {
       setValueInStorage(key, value);
     });
 
+    console.log('updatedQuery: ', updatedQuery);
     router.push({
       pathname: router.pathname,
       query: { ...updatedQuery },
@@ -52,20 +53,12 @@ export function useQueryState() {
   useEffect(() => {
     Object.values(QUERY_KEYS).forEach((key) => {
       const queryValue = query[key];
-      const storageValue = getValueFromStorage(key);
 
       if (queryValue) {
         setValueInStorage(key, queryValue as string);
       }
-
-      if (!queryValue && storageValue) {
-        router.push({
-          pathname: router.pathname,
-          query: { ...router.query, [key]: storageValue },
-        });
-      }
     });
-  }, [query, getValueFromStorage, setValueInStorage, router]);
+  }, [query, setValueInStorage, router]);
 
   return { searchParams: query, setQueryValue };
 }

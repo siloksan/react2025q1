@@ -9,8 +9,7 @@ import { Spacecraft } from '../../api/types';
 // import { removeCard, selectCard } from '../../store/features';
 
 import styles from './card.module.scss';
-import { BROWSER_ROUTES, CLIENT_ROUTES } from '@/api/routes';
-import { useQueryState } from '@/hooks';
+import { BROWSER_ROUTES } from '@/api/routes';
 import { omitKeyFromObject } from '@/utils/omit-key-from-object';
 import { useAppDispatch } from '@/store/store.hooks';
 import { setDetailsLoading } from '@/store/features';

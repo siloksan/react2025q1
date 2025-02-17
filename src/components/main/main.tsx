@@ -8,11 +8,12 @@ import { setLoading } from '@/store/features';
 import { Loader } from '../shared/loader/loader';
 import { useAppDispatch, useAppSelector } from '@/store/store.hooks';
 import { AppState } from '@/store/store.types';
-
-import styles from './main.module.scss';
 import { omitKeyFromObject } from '@/utils';
 import { BROWSER_ROUTES } from '@/api/routes';
 import { useRouter } from 'next/router';
+import { SearchBox } from '../search-bar/search-box';
+
+import styles from './main.module.scss';
 
 export function Main() {
   const { setQueryValue } = useQueryState();
@@ -57,7 +58,7 @@ export function Main() {
       <main className={styles.main}>
         <h1 className={styles.title}>Star ships</h1>
         <div ref={ref}>
-          {/* <SearchBox /> */}
+          <SearchBox />
           {isLoading ? (
             <Loader />
           ) : (
