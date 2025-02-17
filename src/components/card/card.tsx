@@ -1,11 +1,11 @@
-import { useNavigate, useParams } from 'react-router';
+// import { useNavigate, useParams } from 'react-router';
 import { Spacecraft } from '../../api/types';
-import { useQueryState } from '../../hooks/use-query-state';
-import { CLIENT_ROUTES } from '../../routes/routes.constant';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { ComponentProps } from 'react';
-import { removeCard, selectCard } from '../../store/features';
+// import { useQueryState } from '../../hooks/use-query-state';
+// import { CLIENT_ROUTES } from '../../routes/routes.constant';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../../store/store';
+// import { ComponentProps } from 'react';
+// import { removeCard, selectCard } from '../../store/features';
 
 import styles from './card.module.scss';
 
@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function Card({ cardInfo }: Props) {
-  const { name, dateStatus = 'unknown', uid } = cardInfo;
+  const { name, dateStatus = 'unknown' } = cardInfo;
   // const { spacecraftId } = useParams();
   // const { searchParams } = useQueryState();
   // const navigate = useNavigate();
@@ -26,7 +26,7 @@ export function Card({ cardInfo }: Props) {
   //   (state: RootState) => state.selectedCards.value
   // );
 
-  let containerClassName = `${styles.container}`;
+  const containerClassName = `${styles.container}`;
 
   // if (spacecraftId === uid) {
   //   containerClassName += ` ${styles.active}`;

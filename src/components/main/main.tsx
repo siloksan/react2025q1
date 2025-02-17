@@ -1,13 +1,32 @@
 import { MouseEventHandler, useRef } from 'react';
 import { CardsBlock } from './components/cards-block/cards-block';
+import { Pagination } from '../pagination/pagination';
+import { PAGE_OFFSET } from '@/constants/view';
+import { useQueryState } from '@/hooks/use-query-state';
+import { QUERY_KEYS } from '@/constants';
+import { setLoading } from '@/store/features';
+import { Loader } from '../shared/loader/loader';
+import { useAppDispatch, useAppSelector } from '@/store/store.hooks';
+import { AppState } from '@/store/store.types';
 
 import styles from './main.module.scss';
 
 export function Main() {
-  // const cardsList = useSelector((state: RootState) => state.cardsList.value);
-  // const {
-  //   page: { pageNumber, totalPages },
-  // } = cardsList;
+  const { setQueryValue } = useQueryState();
+  const dispatch = useAppDispatch();
+  const { value: cardsList, isLoading } = useAppSelector(
+    (state: AppState) => state.cardsList
+  );
+
+  const {
+    page: { pageNumber, totalPages },
+  } = cardsList ?? { page: { pageNumber: 0, totalPages: 0 } };
+
+  function handlePageChange(pageNumber: number) {
+    const newQueries = [{ key: QUERY_KEYS.PAGE, value: pageNumber.toString() }];
+    dispatch(setLoading(true));
+    setQueryValue(newQueries);
+  }
   // const { searchParams } = useQueryState();
   const ref = useRef<HTMLDivElement>(null);
   // const navigate = useNavigate();
@@ -17,7 +36,7 @@ export function Main() {
       return;
     }
 
-    //   navigate(`/?${searchParams.toString()}`);
+    // navigate(`/?${searchParams.toString()}`);
   };
 
   return (
@@ -30,15 +49,24 @@ export function Main() {
     >
       <main className={styles.main}>
         <h1 className={styles.title}>Star ships</h1>
-        <div ref={ref}>
-          {/* <Pagination
+        {/* <div ref={ref}> */}
+
+        {/* <SearchBox /> */}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <CardsBlock />
+            <Pagination
               currentPage={pageNumber + PAGE_OFFSET}
               totalPages={totalPages}
-            /> */}
-          {/* <SearchBox /> */}
-          <CardsBlock />
-          {/* <Flyout /> */}
-        </div>
+              handleClick={handlePageChange}
+            />
+            {/* <Flyout /> */}
+          </>
+        )}
+
+        {/* </div> */}
       </main>
     </div>
   );

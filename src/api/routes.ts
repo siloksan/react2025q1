@@ -8,9 +8,7 @@ export const API_ROUTES = {
 export type ApiRoutes = (typeof API_ROUTES)[keyof typeof API_ROUTES];
 
 export const CLIENT_ROUTES = {
-  CARDS: 'api/get-cards',
-  CARD_DETAILS: 'api/cards/get-card-details',
-  SET_THEME: 'api/set-theme',
+  CARDS: 'api/cards',
+  CARD_DETAILS: (id: string) => `api/spacecrafts/${id}`,
+  SET_THEME: 'api/theme',
 } as const;
-
-export type ClientRoutes = (typeof CLIENT_ROUTES)[keyof typeof CLIENT_ROUTES];

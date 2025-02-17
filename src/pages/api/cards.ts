@@ -14,7 +14,7 @@ interface Query {
 
 export default async function handler(
   req: NextApiRequestWithQuery<Query>,
-  res: NextApiResponse<SpacecraftsResponse | { message: string }>
+  res: NextApiResponse
 ) {
   if (req.method !== RequestMethod.GET) {
     return res

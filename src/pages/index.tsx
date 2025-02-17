@@ -1,39 +1,53 @@
 import { CLIENT_ROUTES } from '@/api/routes';
-import { SpacecraftsResponse } from '@/api/types';
 import { QUERY_KEYS } from '@/constants';
 import { FIRST_PAGE, PAGE_OFFSET } from '@/constants/view';
 import Layout from '@/layout/layout';
+import { saveDetails, setCardsList, setLoading } from '@/store/features';
+import { wrapper } from '@/store/store';
 import { ServerCookieManager } from '@/utils/server-cookie-manager';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
+import { ParsedUrlQuery } from 'node:querystring';
 
-/**
- * Fetches server-side props for the page.
- *
- * @param context - The context object containing request information.
- * @returns An object containing the theme and cards data as props.
- */
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const theme = ServerCookieManager.getTheme(context);
-  const firstPage = (FIRST_PAGE - PAGE_OFFSET).toString();
+export interface SpacecraftParams extends ParsedUrlQuery {
+  spacecraftId?: string;
+}
 
-  const { name = '', pageNumber = firstPage } = context.query;
-  const protocol = context.req.headers.host?.includes('localhost')
-    ? 'http'
-    : 'https';
-  const baseUrl = `${protocol}://${context.req.headers.host}`;
-  const url = `${baseUrl}/${CLIENT_ROUTES.CARDS}?${QUERY_KEYS.NAME}=${name}&${QUERY_KEYS.PAGE}=${pageNumber}`;
-  const response = await fetch(url);
-  const cards: SpacecraftsResponse = await response.json();
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context: GetServerSidePropsContext<SpacecraftParams>) => {
+    const theme = ServerCookieManager.getTheme(context);
+    const { name = '', page } = context.query;
+    const nextPage = page ? Number(page) : FIRST_PAGE;
+    const protocol = context.req.headers.host?.includes('localhost')
+      ? 'http'
+      : 'https';
+    const baseUrl = `${protocol}://${context.req.headers.host}`;
+    const urlCards = `${baseUrl}/${CLIENT_ROUTES.CARDS}?${QUERY_KEYS.NAME}=${name}&${QUERY_KEYS.PAGE}=${nextPage - PAGE_OFFSET}`;
+    const cards = await fetch(urlCards).then((res) => res.json());
+    const spacecraftId = context.params?.spacecraftId;
 
-  return { props: { theme, cards } };
-};
+    if (spacecraftId) {
+      const urlCardDetails = `${baseUrl}/${CLIENT_ROUTES.CARD_DETAILS(spacecraftId)}`;
+      const cardDetails = await fetch(urlCardDetails).then((res) => res.json());
 
-export type HomeProps = Awaited<ReturnType<typeof getServerSideProps>>['props'];
+      store.dispatch(saveDetails(cardDetails.spacecraft));
+      console.log('cardDetails: ', cardDetails);
+    }
 
-export default function Home() {
+    store.dispatch(setCardsList(cards));
+    store.dispatch(setLoading(false));
+
+    return {
+      props: {
+        theme,
+      },
+    };
+  }
+);
+
+export type HomeProps = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+export default function Page() {
   return (
     <>
       <Head>

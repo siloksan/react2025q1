@@ -4,11 +4,12 @@ import {
   wrapMakeStore,
 } from 'next-redux-cookie-wrapper';
 import { createWrapper } from 'next-redux-wrapper';
-import { cardsListSlice } from './features';
+import { cardDetailsSlice, cardsListSlice } from './features';
 import { AppStore } from './store.types';
 
 const rootReducer = {
   [cardsListSlice.name]: cardsListSlice.reducer,
+  [cardDetailsSlice.name]: cardDetailsSlice.reducer,
 };
 
 export const makeStore = wrapMakeStore(() =>
@@ -17,27 +18,10 @@ export const makeStore = wrapMakeStore(() =>
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().prepend(
         nextReduxCookieMiddleware({
-          subtrees: [
-            // {
-            //   subtree: `${cardsListSlice.name}.value`,
-            //   cookieName: 'NEXT_LOCALE',
-            //   serializationFunction: String,
-            //   deserializationFunction: String,
-            //   defaultState: cardsListSlice.getInitialState().value,
-            // },
-            // {
-            //   subtree: `${cardsListSlice.name}.isLoading`,
-            //   cookieName: 'NEXT_LOCALE',
-            //   serializationFunction: String,
-            //   deserializationFunction: String,
-            //   defaultState: cardsListSlice.getInitialState().isLoading,
-            // },
-            `${cardsListSlice.name}`,
-            // `${cardsListSlice.name}.isLoading`,
-          ],
+          subtrees: [`${cardsListSlice.name}`, `${cardDetailsSlice.name}`],
         })
       ),
   })
 );
 
-export const wrapper = createWrapper<AppStore>(makeStore, { debug: true });
+export const wrapper = createWrapper<AppStore>(makeStore, { debug: false });
