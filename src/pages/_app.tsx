@@ -1,25 +1,24 @@
 import type { AppProps } from 'next/app';
-import { HomeProps } from '.';
 import { ErrorBoundary } from '@/components/shared/error-boundary/error-boundary';
 import { ThemeProvider } from '@/context/theme-context/theme.provider';
-import { CardsProvider } from '@/context/cards-context/cards.provider';
+import { Provider } from 'react-redux';
+import { wrapper } from '@/store/store';
 
 import '@/styles/index.scss';
+import { HomeProps } from '.';
 
-interface AppHomeProps extends AppProps {
-  pageProps: HomeProps;
-}
-
-export default function App({ Component, pageProps: props }: AppHomeProps) {
-  const { theme, cards } = props;
+export default function App({ Component, ...appProps }: AppProps<HomeProps>) {
+  const wrappedStore = wrapper.useWrappedStore(appProps);
+  const props: HomeProps = wrappedStore.props;
+  const { theme } = props;
 
   return (
     <ErrorBoundary>
-      <ThemeProvider theme={theme}>
-        <CardsProvider cards={cards}>
+      <Provider store={wrappedStore.store}>
+        <ThemeProvider theme={theme}>
           <Component {...props} />
-        </CardsProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </Provider>
     </ErrorBoundary>
   );
 }

@@ -9,7 +9,7 @@ import type { NextApiResponse } from 'next';
 
 interface Query {
   name: string;
-  pageNumber: string;
+  page: string;
 }
 
 export default async function handler(
@@ -22,7 +22,7 @@ export default async function handler(
       .json({ message: HTTP_ERRORS[HTTP_CODES.NOT_ALLOWED] });
   }
 
-  const { name, pageNumber } = req.query;
+  const { name, page: pageNumber } = req.query;
 
   const payload: SpaceCraftsRequestPayload = {
     name,
@@ -30,7 +30,6 @@ export default async function handler(
     status: '',
   };
   const query: QueryObject = { pageNumber, pageSize: CARDS_PER_PAGE };
-
   try {
     const data = await requestHandler<SpacecraftsResponse>({
       endpoint: API_ROUTES.CARDS,

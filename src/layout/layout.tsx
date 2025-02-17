@@ -5,7 +5,6 @@ import { useThemeContext } from '@/context/theme-context/theme.context';
 
 export default function Layout() {
   const { theme } = useThemeContext();
-
   return (
     <div data-theme={theme} className={styles.layout}>
       <Header />
