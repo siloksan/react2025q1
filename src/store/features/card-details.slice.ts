@@ -6,33 +6,33 @@ import { AppState } from '../store.types';
 
 export interface CardDetailsState {
   value: Spacecraft | null;
+  isLoading: boolean;
 }
 
 const initialState: CardDetailsState = {
   value: null,
+  isLoading: false,
 };
 
 export const cardDetailsSlice = createSlice({
   name: 'cardDetails',
   initialState,
   reducers: {
-    saveDetails: (state, action: PayloadAction<Spacecraft>) => {
+    saveDetails: (state, action: PayloadAction<Spacecraft | null>) => {
       state.value = action.payload;
     },
-    removeDetails: (state) => {
-      state.value = null;
+
+    setDetailsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
     },
   },
 
   extraReducers(builder) {
     builder.addCase<typeof HYDRATE, PayloadAction<AppState, typeof HYDRATE>>(
       HYDRATE,
-      (state, { payload }) => ({
-        ...state,
-        ...payload.cardDetails,
-      })
+      (_, { payload }) => payload.cardDetails
     );
   },
 });
 
-export const { saveDetails, removeDetails } = cardDetailsSlice.actions;
+export const { saveDetails, setDetailsLoading } = cardDetailsSlice.actions;

@@ -2,7 +2,7 @@ import { HTTP_CODES, HTTP_ERRORS, RequestMethod } from '@/api/api-constants';
 import { API_ROUTES } from '@/api/routes';
 import { SpaceCraftsRequestPayload, SpacecraftsResponse } from '@/api/types';
 import { requestHandler } from '@/api/utils';
-import { CARDS_PER_PAGE } from '@/constants/view';
+import { CARDS_PER_PAGE, PAGE_OFFSET } from '@/constants/view';
 import { NextApiRequestWithQuery } from '@/types';
 import { QueryObject } from '@/utils';
 import type { NextApiResponse } from 'next';
@@ -22,14 +22,17 @@ export default async function handler(
       .json({ message: HTTP_ERRORS[HTTP_CODES.NOT_ALLOWED] });
   }
 
-  const { name, page: pageNumber } = req.query;
+  const { name, page } = req.query;
 
   const payload: SpaceCraftsRequestPayload = {
     name,
     registry: '',
     status: '',
   };
+  const pageNumber = Number(page) - PAGE_OFFSET;
+
   const query: QueryObject = { pageNumber, pageSize: CARDS_PER_PAGE };
+
   try {
     const data = await requestHandler<SpacecraftsResponse>({
       endpoint: API_ROUTES.CARDS,

@@ -1,8 +1,13 @@
 import { CLIENT_ROUTES } from '@/api/routes';
 import { QUERY_KEYS } from '@/constants';
-import { FIRST_PAGE, PAGE_OFFSET } from '@/constants/view';
+import { FIRST_PAGE } from '@/constants/view';
 import Layout from '@/layout/layout';
-import { saveDetails, setCardsList, setLoading } from '@/store/features';
+import {
+  saveDetails,
+  setCardsList,
+  setDetailsLoading,
+  setLoading,
+} from '@/store/features';
 import { wrapper } from '@/store/store';
 import { ServerCookieManager } from '@/utils/server-cookie-manager';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
@@ -16,23 +21,24 @@ export interface SpacecraftParams extends ParsedUrlQuery {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context: GetServerSidePropsContext<SpacecraftParams>) => {
     const theme = ServerCookieManager.getTheme(context);
-    const { name = '', page } = context.query;
-    const nextPage = page ? Number(page) : FIRST_PAGE;
+    const { name = '', page = FIRST_PAGE } = context.query;
     const protocol = context.req.headers.host?.includes('localhost')
       ? 'http'
       : 'https';
     const baseUrl = `${protocol}://${context.req.headers.host}`;
-    const urlCards = `${baseUrl}/${CLIENT_ROUTES.CARDS}?${QUERY_KEYS.NAME}=${name}&${QUERY_KEYS.PAGE}=${nextPage - PAGE_OFFSET}`;
+    const urlCards = `${baseUrl}${CLIENT_ROUTES.CARDS}?${QUERY_KEYS.NAME}=${name}&${QUERY_KEYS.PAGE}=${page}`;
     const cards = await fetch(urlCards).then((res) => res.json());
     const spacecraftId = context.params?.spacecraftId;
 
     if (spacecraftId) {
-      const urlCardDetails = `${baseUrl}/${CLIENT_ROUTES.CARD_DETAILS(spacecraftId)}`;
+      const urlCardDetails = `${baseUrl}${CLIENT_ROUTES.CARD_DETAILS(spacecraftId)}`;
       const cardDetails = await fetch(urlCardDetails).then((res) => res.json());
 
       store.dispatch(saveDetails(cardDetails.spacecraft));
-      console.log('cardDetails: ', cardDetails);
+    } else {
+      store.dispatch(saveDetails(null));
     }
+    store.dispatch(setDetailsLoading(false));
 
     store.dispatch(setCardsList(cards));
     store.dispatch(setLoading(false));

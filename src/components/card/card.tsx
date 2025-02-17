@@ -1,4 +1,5 @@
 // import { useNavigate, useParams } from 'react-router';
+import { useRouter } from 'next/router';
 import { Spacecraft } from '../../api/types';
 // import { useQueryState } from '../../hooks/use-query-state';
 // import { CLIENT_ROUTES } from '../../routes/routes.constant';
@@ -8,6 +9,11 @@ import { Spacecraft } from '../../api/types';
 // import { removeCard, selectCard } from '../../store/features';
 
 import styles from './card.module.scss';
+import { BROWSER_ROUTES, CLIENT_ROUTES } from '@/api/routes';
+import { useQueryState } from '@/hooks';
+import { omitKeyFromObject } from '@/utils/omit-key-from-object';
+import { useAppDispatch } from '@/store/store.hooks';
+import { setDetailsLoading } from '@/store/features';
 
 export const CARD_TESTID = 'card_testid';
 
@@ -17,36 +23,46 @@ interface Props {
 
 export function Card({ cardInfo }: Props) {
   const { name, dateStatus = 'unknown' } = cardInfo;
-  // const { spacecraftId } = useParams();
-  // const { searchParams } = useQueryState();
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { query } = router;
 
   // const selectedCards = useSelector(
   //   (state: RootState) => state.selectedCards.value
   // );
 
-  const containerClassName = `${styles.container}`;
+  let containerClassName = `${styles.container}`;
+  const cardId = cardInfo.uid;
+  const paramsId = router.query.spacecraftId;
 
-  // if (spacecraftId === uid) {
-  //   containerClassName += ` ${styles.active}`;
-  // }
+  if (cardId === paramsId) {
+    containerClassName += ` ${styles.active}`;
+  }
 
-  // function openDetails() {
-  //   navigate(`${CLIENT_ROUTES.SPACECRAFTS}/${uid}?${searchParams.toString()}`);
-  // }
+  const newQuery = omitKeyFromObject('spacecraftId', query);
 
-  // function closeDetails() {
-  //   navigate(`/?${searchParams.toString()}`);
-  // }
+  function openDetails() {
+    dispatch(setDetailsLoading(true));
+    router.push({
+      pathname: `${BROWSER_ROUTES.CARD_DETAILS(cardInfo.uid)}`,
+      query: { ...newQuery },
+    });
+  }
 
-  // const handleClick = () => {
-  //   if (spacecraftId === uid) {
-  //     closeDetails();
-  //   } else {
-  //     openDetails();
-  //   }
-  // };
+  function closeDetails() {
+    router.push({
+      pathname: `${BROWSER_ROUTES.CARDS}`,
+      query: { ...newQuery },
+    });
+  }
+
+  const handleClick = () => {
+    if (cardId === paramsId) {
+      closeDetails();
+    } else {
+      openDetails();
+    }
+  };
 
   // const handleCheck: ComponentProps<'input'>['onClick'] = (e) => {
   //   e.stopPropagation();
@@ -65,7 +81,7 @@ export function Card({ cardInfo }: Props) {
   return (
     <li
       className={containerClassName}
-      // onClick={handleClick}
+      onClick={handleClick}
       data-testid={CARD_TESTID}
     >
       <input

@@ -30,10 +30,7 @@ export const cardsListSlice = createSlice({
   extraReducers(builder) {
     builder.addCase<typeof HYDRATE, PayloadAction<AppState, typeof HYDRATE>>(
       HYDRATE,
-      (state, { payload }) => ({
-        ...state,
-        ...payload.cardsList,
-      })
+      (_, { payload }) => payload.cardsList
     );
   },
 });
