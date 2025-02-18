@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { Spacecraft } from '../../api/types';
 import { useAppDispatch, useAppSelector } from '@/store/store.hooks';
-import { removeCard, selectCard, setDetailsLoading } from '@/store/features';
+import { setDetailsLoading } from '@/store/features';
 import { Card } from './card';
 import { DUMMY_SPACECRAFT_DETAILS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftDetailsResponse';
 import userEvent from '@testing-library/user-event';
