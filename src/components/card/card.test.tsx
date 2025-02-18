@@ -18,11 +18,6 @@ vi.mock('@/store/store.hooks', () => ({
   useAppSelector: vi.fn(),
 }));
 
-vi.mock('@/store/store.hooks', () => ({
-  useAppDispatch: vi.fn(),
-  useAppSelector: vi.fn(),
-}));
-
 describe('Card', () => {
   const cardInfo =
     DUMMY_SPACECRAFT_DETAILS_RESPONSE.spacecraft as unknown as Spacecraft;
