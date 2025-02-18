@@ -6,8 +6,8 @@ import { Card } from './card';
 import { DUMMY_SPACECRAFT_DETAILS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftDetailsResponse';
 import userEvent from '@testing-library/user-event';
 import { render } from '@testing-library/react';
-import { Mock } from 'vitest';
 import { BROWSER_ROUTES } from '@/api/routes';
+import { Mock } from 'vitest';
 
 vi.mock('next/router', () => ({
   useRouter: vi.fn(),

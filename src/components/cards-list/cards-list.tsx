@@ -1,9 +1,9 @@
 import { ComponentProps, useCallback } from 'react';
 import { Card } from '../card/card';
 import { useAppSelector } from '@/store/store.hooks';
+import { AppState } from '@/store/store.types';
 
 import styles from './cards-list.module.scss';
-import { AppState } from '@/store/store.types';
 
 export function CardsList({ className = '' }: ComponentProps<'ul'>) {
   const cards = useAppSelector((state: AppState) => state.cardsList.value);
