@@ -1,4 +1,4 @@
-import Logo from '../shared/logo/logo';
+import { Logo } from '../shared/logo/logo';
 import { ThemeToggle } from '../theme-toggle/theme-toggle';
 
 import styles from './header.module.scss';
