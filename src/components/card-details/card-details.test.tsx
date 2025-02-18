@@ -2,11 +2,11 @@ import { useAppSelector } from '@/store/store.hooks';
 import { useRouter } from 'next/router';
 import { BROWSER_ROUTES } from '@/api/routes';
 import { render } from '@testing-library/react';
-import CardDetails from './card-details';
 import { DUMMY_SPACECRAFT_DETAILS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftDetailsResponse';
 import { Mock } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { LOADER_TEST_ID } from '../shared/loader/loader';
+import { CardDetails } from './card-details';
 
 vi.mock('next/router', () => ({
   useRouter: vi.fn(),

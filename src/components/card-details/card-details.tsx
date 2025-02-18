@@ -7,7 +7,7 @@ import styles from './card-details.module.scss';
 import { BROWSER_ROUTES } from '@/api/routes';
 import { omitKeyFromObject } from '@/utils';
 
-export default function CardDetails() {
+export function CardDetails() {
   const router = useRouter();
   const { value: spacecraft, isLoading } = useAppSelector(
     (state: AppState) => state.cardDetails
