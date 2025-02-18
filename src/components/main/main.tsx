@@ -15,8 +15,9 @@ import { SearchBox } from '../search-bar/search-box';
 import { Flyout } from '../flyout/flyout';
 
 import styles from './main.module.scss';
+import { WithTestId } from '@/types';
 
-export function Main() {
+export function Main({ testid }: WithTestId) {
   const { setQueryValue } = useQueryState();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -42,10 +43,12 @@ export function Main() {
 
     const { query } = router;
     const newQuery = omitKeyFromObject('spacecraftId', query);
-    router.push({
+    const newRoute = {
       pathname: `${BROWSER_ROUTES.CARDS}`,
       query: { ...newQuery },
-    });
+    };
+
+    router.push(newRoute);
   };
 
   return (
@@ -55,8 +58,9 @@ export function Main() {
       tabIndex={0}
       onClick={closeDetails}
       onKeyDown={() => {}}
+      data-testid={testid}
     >
-      <main className={styles.main}>
+      <div className={styles.main}>
         <h1 className={styles.title}>Star ships</h1>
         <div ref={ref}>
           <SearchBox />
@@ -74,7 +78,7 @@ export function Main() {
             </>
           )}
         </div>
-      </main>
+      </div>
     </div>
   );
 }
