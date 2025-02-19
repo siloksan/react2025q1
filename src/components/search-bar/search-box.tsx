@@ -1,13 +1,13 @@
 import { ChangeEvent, ComponentProps, KeyboardEvent, useState } from 'react';
 import loupe from './assets/search-icon.svg';
-import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
 import { FIRST_PAGE, PAGE_OFFSET } from '../cards-list/cards-list.constants';
 import Image from 'next/image';
-
-import styles from './search-box.module.scss';
+import { useQueryState } from '@/hooks/use-query-state';
 import { setLoading } from '@/store/features';
 import { useAppDispatch } from '@/store/store.hooks';
+
+import styles from './search-box.module.scss';
 
 export const SEARCH_PLACEHOLDER = 'Search';
 
@@ -58,7 +58,7 @@ export function SearchBox({ className = '' }: ComponentProps<'div'>) {
           type="submit"
           onClick={handleSubmit}
         >
-          <Image src={loupe} alt="loupe icon" />
+          <Image src={loupe} alt="loupe icon" width={40} height={40} />
         </button>
       </div>
     </div>
