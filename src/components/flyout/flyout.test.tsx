@@ -1,12 +1,10 @@
 import { render } from '@testing-library/react';
-
 import userEvent from '@testing-library/user-event';
-import { Flyout } from './Flyout';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { Mock } from 'vitest';
 import { DUMMY_SPACECRAFTS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftsResponse';
 import { createCsv } from '../../utils';
+import { Flyout } from './flyout';
 
 vi.mock('../../utils', () => ({
   createCsv: vi.fn(),
