@@ -43,7 +43,6 @@ export function useQueryState() {
       setValueInStorage(key, value);
     });
 
-    console.log('updatedQuery: ', updatedQuery);
     router.push({
       pathname: router.pathname,
       query: { ...updatedQuery },

@@ -3,8 +3,16 @@ import { ThemeContext } from './theme.context';
 import { Themes } from './theme.constants';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from './theme.provider';
+import { Mock } from 'vitest';
 
 vi.mock('../hooks');
+
+global.fetch = vi.fn(() =>
+  Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve({ success: true }),
+  })
+) as Mock;
 
 describe('ThemeProvider', () => {
   it('should provide the initial theme', () => {
