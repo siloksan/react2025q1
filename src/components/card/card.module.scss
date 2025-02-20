@@ -8,7 +8,7 @@
   padding: 10px;
   border: 1px solid var(--color--cart-border);
   background-color: var(--color--card);
-  color: var(--color--white);
+  color: var(--color--main-text);
   min-height: 100px;
 
   a {
@@ -33,4 +33,10 @@
 
 .active {
   background-color: var(--color--card--active);
+}
+
+.checkbox {
+  margin-right: 10px;
+  width: 25px;
+  height: 25px;
 }

@@ -4,14 +4,8 @@ export const DUMMY_SPACECRAFTS_RESPONSE: SpacecraftsResponse = {
   page: {
     pageNumber: 0,
     pageSize: 2,
-    numberOfElements: 2,
     totalElements: 2,
     totalPages: 1,
-    firstPage: true,
-    lastPage: false,
-  },
-  sort: {
-    clauses: [],
   },
   spacecrafts: [
     {

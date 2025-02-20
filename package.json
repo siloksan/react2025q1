@@ -18,9 +18,10 @@
     "test:watch": "vitest --watch"
   },
   "dependencies": {
-    "@testing-library/user-event": "^14.6.1",
+    "@reduxjs/toolkit": "^2.5.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-redux": "^9.2.0",
     "react-router": "^7.1.3"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.12.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

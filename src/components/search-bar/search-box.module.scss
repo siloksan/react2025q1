@@ -1,8 +1,7 @@
 .container {
   flex-grow: 0.5;
   padding: 2px 4px;
-  background-color: var(--color--black);
-  background-color: var(--color--dark-blue);
+  background-color: var(--color--shared-bg);
   border-radius: 3px;
 }
 
@@ -18,20 +17,20 @@
   flex-grow: 1;
   height: 100%;
   font-size: 1.6rem;
-  color: var(--color--white);
+  color: var(--color--main-text);
   padding: 3px 8px;
-  background-color: var(--color--dark-blue);
+  background-color: var(--color--shared-bg);
 }
 
 .button {
   width: 40px;
   height: 100%;
-  background-color: var(--color--light-blue);
+  background-color: var(--color--main-bg);
   border-radius: 3px;
   &:hover {
-    background-color: var(--color--light-blue--hover);
+    background-color: var(--color--main-bg--hover);
   }
   &:active {
-    background-color: var(--color--light-blue--active);
+    background-color: var(--color--main-bg--active);
   }
 }

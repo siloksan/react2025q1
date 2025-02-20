@@ -1,6 +1,8 @@
 import React from 'react';
 
-import styles from './ErrorBoundary.module.scss';
+import styles from './error-boundary.module.scss';
+
+export const ERROR_BOUNDARY_TEST_ID = 'error-boundary';
 
 interface Props {
   children: React.ReactNode;
@@ -10,7 +12,7 @@ interface State {
   errorInfo: React.ErrorInfo | null;
 }
 
-class ErrorBoundary extends React.Component<Props, State> {
+export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { error: null, errorInfo: null };
@@ -32,7 +34,7 @@ class ErrorBoundary extends React.Component<Props, State> {
     const { children } = this.props;
     if (error && errorInfo) {
       return (
-        <div className={styles.container}>
+        <div className={styles.container} data-testid={ERROR_BOUNDARY_TEST_ID}>
           <h2>Something went wrong!</h2>
           <details style={{ whiteSpace: 'pre-wrap' }}>
             {error.message.toString()}
@@ -46,5 +48,3 @@ class ErrorBoundary extends React.Component<Props, State> {
     return children;
   }
 }
-
-export default ErrorBoundary;

@@ -1,15 +1,22 @@
 import { StrictMode } from 'react';
-import ErrorBoundary from './shared/errorBoundary/ErrorBoundary';
+import { ErrorBoundary } from './components/shared/error-boundary/error-boundary';
 import { RouterProvider } from 'react-router';
-import routes from './routes/routes';
+import { routes } from './routes/routes';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 import './styles/index.scss';
+import { ThemeProvider } from './context/theme.provider';
 
 export function App() {
   return (
     <StrictMode>
       <ErrorBoundary>
-        <RouterProvider router={routes} />
+        <Provider store={store}>
+          <ThemeProvider>
+            <RouterProvider router={routes} />
+          </ThemeProvider>
+        </Provider>
       </ErrorBoundary>
     </StrictMode>
   );

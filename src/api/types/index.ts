@@ -1,4 +1,4 @@
-import { QueryObject } from '../../utils/createQueryString';
+import { QueryObject } from '../../utils/create-query-string';
 
 export type Payload = SpaceCraftsRequestPayload;
 
@@ -11,11 +11,8 @@ export interface SpaceCraftsRequestPayload extends QueryObject {
 export interface Page {
   pageNumber: number;
   pageSize: number;
-  numberOfElements: number;
   totalElements: number;
   totalPages: number;
-  firstPage: boolean;
-  lastPage: boolean;
 }
 
 interface Option {
@@ -50,10 +47,14 @@ export interface Spacecraft {
 
 export interface SpacecraftsResponse {
   page: Page;
-  sort: { clauses: string[] };
   spacecrafts: Spacecraft[];
 }
 
 export interface SpacecraftResponse {
   spacecraft: Spacecraft;
+}
+
+export interface SpaceCraftsRequestParams {
+  name: string;
+  pageNumber: number;
 }

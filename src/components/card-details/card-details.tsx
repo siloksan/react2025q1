@@ -1,52 +1,27 @@
-import { useEffect, useState } from 'react';
-import { getSpacecraft } from './card-details.get-data';
-import { Loader } from '../../shared/loader/loader';
-import { Spacecraft } from '../../api/types';
+import { Loader } from '../shared/loader/loader';
 import { useQueryState } from '../../hooks/use-query-state';
 import { useNavigate, useParams } from 'react-router';
+import { useGetCardDetailsQuery } from '../../api/api-root';
 
 import styles from './card-details.module.scss';
 
 export default function CardDetails() {
   const { spacecraftId } = useParams();
-  const [data, setData] = useState<Spacecraft | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const { searchParams } = useQueryState();
   const navigate = useNavigate();
+  const { data, isFetching, isError, error } = useGetCardDetailsQuery(
+    spacecraftId ?? ''
+  );
 
   const closeDetails = () => {
     navigate(`/?${searchParams.toString()}`);
   };
 
-  useEffect(() => {
-    const getCardDetails = async (uid: string) => {
-      setLoading(true);
-      setData(null);
-
-      try {
-        const { spacecraft } = await getSpacecraft(uid);
-
-        setData(spacecraft);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError('err.message');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (spacecraftId) {
-      getCardDetails(spacecraftId);
-    }
-  }, [spacecraftId]);
-
-  if (error) {
-    throw new Error(error);
+  if (isError) {
+    throw error;
   }
 
-  if (loading) {
+  if (isFetching) {
     return <Loader />;
   }
 
@@ -62,7 +37,7 @@ export default function CardDetails() {
     dateStatus = 'unknown',
     spacecraftClass,
     status = 'unknown',
-  } = data;
+  } = data.spacecraft;
 
   const ownerName = owner ? owner.name : 'unknown';
   const operatorName = operator ? operator.name : 'unknown';

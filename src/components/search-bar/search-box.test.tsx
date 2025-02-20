@@ -1,11 +1,11 @@
 import { SEARCH_PLACEHOLDER, SearchBox } from './search-box';
-import { CLIENT_ROUTES } from '../../routes/routes';
 import { renderWithReactRouter } from '../../api/mock/mocks/mock-react-router';
 import { Mock } from 'vitest';
 import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants';
 import userEvent from '@testing-library/user-event';
 import { fireEvent } from '@testing-library/dom';
+import { CLIENT_ROUTES } from '../../routes/routes.constant';
 
 vi.mock('../../hooks/use-query-state', () => ({
   useQueryState: vi.fn(),

@@ -34,11 +34,6 @@ body {
   width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('../assets/images/background_1.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
   @include font(400, var(--font-family--genos));
 }
 

@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { getButtonsNameArray, EMPTY_BUTTON_VALUE } from './pagination.utils';
 
 describe('getButtonsNameArray', () => {

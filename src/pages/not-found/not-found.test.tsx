@@ -1,6 +1,6 @@
 import NotFoundPage from './not-found';
 import { renderWithReactRouter } from '../../api/mock/mocks/mock-react-router';
-import { CLIENT_ROUTES } from '../../routes/routes';
+import { CLIENT_ROUTES } from '../../routes/routes.constant';
 
 const renderSearchBox = renderWithReactRouter(NotFoundPage, CLIENT_ROUTES.HOME);
 describe('NotFoundPage', () => {

@@ -1,66 +1,39 @@
-import { ComponentProps, useCallback, useEffect, useState } from 'react';
-import { SpacecraftsResponse } from '../../api/types';
-import { Loader } from '../../shared/loader/loader';
+import { ComponentProps, useCallback, useEffect } from 'react';
+import { Loader } from '../shared/loader/loader';
 import { Card } from '../card/card';
-import { getSpacecrafts } from './cards-list.get-data';
 import { useQueryState } from '../../hooks/use-query-state';
 import { QUERY_KEYS } from '../../constants/query-keys';
-import { PAGE_OFFSET } from './cards-list.constants';
+import { FIRST_PAGE, PAGE_OFFSET } from './cards-list.constants';
+import { useGetCardsQuery } from '../../api/api-root';
+import { setCardsList } from '../../store/features';
+import { useDispatch } from 'react-redux';
 
 import styles from './cards-list.module.scss';
 
-interface Props extends ComponentProps<'ul'> {
-  readonly data: SpacecraftsResponse | null;
-  readonly setData: (data: SpacecraftsResponse | null) => void;
-}
-
-export function CardsList({ data, setData, className = '' }: Props) {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+export function CardsList({ className = '' }: ComponentProps<'ul'>) {
   const { searchParams } = useQueryState();
+  const dispatch = useDispatch();
   const searchTerm = searchParams.get(QUERY_KEYS.NAME) ?? '';
   const pageNumber =
-    Number(searchParams.get(QUERY_KEYS.PAGE) ?? 1) - PAGE_OFFSET;
+    Number(searchParams.get(QUERY_KEYS.PAGE) ?? FIRST_PAGE) - PAGE_OFFSET;
+
+  const { data, isFetching, isError, error } = useGetCardsQuery({
+    name: searchTerm,
+    pageNumber,
+  });
 
   useEffect(() => {
-    let isMounted = true;
+    if (data) {
+      dispatch(setCardsList(data));
+    }
+  }, [data, dispatch]);
 
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const result = await getSpacecrafts({
-          name: searchTerm,
-          pageNumber: Number(pageNumber),
-        });
-
-        if (isMounted) {
-          setData(result);
-          setError(null);
-        }
-      } catch (error) {
-        if (isMounted) {
-          setError(error instanceof Error ? error.message : 'Unknown error');
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [searchTerm, pageNumber]);
-
-  if (error) {
-    throw new Error(error);
+  if (isError) {
+    throw error;
   }
 
   const renderList = useCallback(() => {
-    if (loading) {
+    if (isFetching) {
       return <Loader />;
     }
 
@@ -71,7 +44,7 @@ export function CardsList({ data, setData, className = '' }: Props) {
     return data.spacecrafts.map((card) => (
       <Card cardInfo={card} key={card.uid} />
     ));
-  }, [loading, data]);
+  }, [isFetching, data]);
 
   return <ul className={`${styles.list} ${className}`}>{renderList()}</ul>;
 }

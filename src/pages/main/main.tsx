@@ -1,22 +1,23 @@
-import ErrorBoundary from '../../shared/errorBoundary/ErrorBoundary';
+import { ErrorBoundary } from '../../components/shared/error-boundary/error-boundary';
 import { ErrorButton } from './components/error-button/error-button';
 import { SearchBox } from '../../components/search-bar/search-box';
 import { Pagination } from '../../components/pagination/pagination';
-import { MouseEventHandler, useRef, useState } from 'react';
-import { SpacecraftsResponse } from '../../api/types';
-import {
-  FIRST_PAGE,
-  PAGE_OFFSET,
-} from '../../components/cards-list/cards-list.constants';
+import { MouseEventHandler, useRef } from 'react';
 import { CardsBlock } from './components/cards-block/cards-block';
-
-import styles from './main.module.scss';
+import { Flyout } from '../../components/flyout/flyout';
+import { PAGE_OFFSET } from '../../components/cards-list/cards-list.constants';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
 import { useQueryState } from '../../hooks/use-query-state';
 import { useNavigate } from 'react-router';
 
+import styles from './main.module.scss';
+
 export function Main() {
-  const [data, setData] = useState<SpacecraftsResponse | null>(null);
-  const { totalPages = 0, pageNumber = FIRST_PAGE } = data?.page ?? {};
+  const cardsList = useSelector((state: RootState) => state.cardsList.value);
+  const {
+    page: { pageNumber, totalPages },
+  } = cardsList;
   const { searchParams } = useQueryState();
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -46,7 +47,8 @@ export function Main() {
               totalPages={totalPages}
             />
             <SearchBox />
-            <CardsBlock data={data} setData={setData} />
+            <CardsBlock />
+            <Flyout />
           </div>
         </ErrorBoundary>
         <ErrorButton />
