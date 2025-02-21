@@ -1,3 +1,5 @@
+'use client';
+
 import { useThemeContext } from '@/context/theme-context/theme.context';
 import { Themes } from '@/context/theme-context/theme.constants';
 import { WithTestId } from '../../types';

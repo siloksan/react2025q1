@@ -1,10 +1,9 @@
 import { COOKIE_KEYS, CookieKeys } from '@/constants/cookie';
 import { Themes } from '@/context/theme-context/theme.constants';
-import { ServerResponse } from 'http';
-import { GetServerSidePropsContext } from 'next';
+import { cookies } from 'next/headers';
 
 interface SetCookieOptions {
-  res: ServerResponse;
+  res: Response;
   value: Themes;
   key?: CookieKeys;
   days?: number;
@@ -21,15 +20,19 @@ function setCookie({
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
   const age = date.toUTCString();
-  res.setHeader('Set-Cookie', `${key}=${value}; Path=${path}; Max-Age=${age}`);
+
+  res.headers.set(
+    'Set-Cookie',
+    `${key}=${value}; Path=${path}; Max-Age=${age}`
+  );
 }
 
-function getTheme(context: GetServerSidePropsContext) {
-  const theme = context.req.cookies[COOKIE_KEYS.THEME];
+async function getTheme() {
+  const theme = (await cookies()).get(COOKIE_KEYS.THEME)?.value;
 
   if (!theme) {
     setCookie({
-      res: context.res,
+      res: new Response(),
       value: Themes.light,
     });
 

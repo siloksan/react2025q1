@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import { Component } from 'react';
 
 import styles from './error-boundary.module.scss';
 
@@ -12,7 +14,7 @@ interface State {
   errorInfo: React.ErrorInfo | null;
 }
 
-export class ErrorBoundary extends React.Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { error: null, errorInfo: null };
@@ -32,6 +34,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
   render() {
     const { error, errorInfo } = this.state;
     const { children } = this.props;
+
     if (error && errorInfo) {
       return (
         <div className={styles.container} data-testid={ERROR_BOUNDARY_TEST_ID}>

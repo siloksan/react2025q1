@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren, useCallback, useMemo, useState } from 'react';
 import { Themes } from './theme.constants';
 import { ThemeContext } from './theme.context';
@@ -10,6 +12,7 @@ interface Props extends PropsWithChildren {
 
 export function ThemeProvider(props: Props) {
   const [theme, setTheme] = useState<Themes>(props.theme);
+  console.log('Provider theme: ', theme);
 
   const toggleTheme = useCallback(() => {
     const selectedTheme = theme === Themes.light ? Themes.dark : Themes.light;
@@ -26,3 +29,13 @@ export function ThemeProvider(props: Props) {
 
   return <ThemeContext.Provider value={value} {...props} />;
 }
+
+// export function ThemeProviderWrapper({
+//   theme,
+//   children,
+// }: {
+//   theme: Themes;
+//   children: React.ReactNode;
+// }) {
+//   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+// }

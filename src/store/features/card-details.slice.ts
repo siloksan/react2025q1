@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { Spacecraft } from '../../api/types';
-import { HYDRATE } from 'next-redux-wrapper';
-import { AppState } from '../store.types';
 
 export interface CardDetailsState {
   value: Spacecraft | null;
@@ -25,13 +23,6 @@ export const cardDetailsSlice = createSlice({
     setDetailsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-  },
-
-  extraReducers(builder) {
-    builder.addCase<typeof HYDRATE, PayloadAction<AppState, typeof HYDRATE>>(
-      HYDRATE,
-      (_, { payload }) => payload.cardDetails
-    );
   },
 });
 
