@@ -12,7 +12,6 @@ interface Props extends PropsWithChildren {
 
 export function ThemeProvider(props: Props) {
   const [theme, setTheme] = useState<Themes>(props.theme);
-  console.log('Provider theme: ', theme);
 
   const toggleTheme = useCallback(() => {
     const selectedTheme = theme === Themes.light ? Themes.dark : Themes.light;

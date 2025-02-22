@@ -5,3 +5,8 @@ export type NextApiRequestWithQuery<T> = NextRequest & { query: T };
 export type NextApiRequestWithBody<T> = NextRequest & {
   json: () => Promise<T>;
 };
+
+export interface NextPageProps {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}

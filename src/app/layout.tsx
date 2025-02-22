@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
-import { Header } from '@/components/header/header';
 import { PropsWithChildren } from 'react';
 import { ErrorBoundary } from '@/components/shared/error-boundary/error-boundary';
 import { ThemeProvider } from '@/context/theme-context/theme.provider';
-import '@/styles/index.scss';
 import { ServerCookieManager } from '@/utils';
 import StoreProvider from '@/store/store.provider';
+import { BodyWrapper } from './_wrapper';
+
+import '@/styles/index.scss';
 
 export const metadata: Metadata = {
   title: 'Star Trek',
@@ -20,14 +21,13 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
   return (
     <html lang="en">
-      <body>
-        <StoreProvider>
-          <ThemeProvider theme={theme}>
-            <Header />
-            <ErrorBoundary>{children}</ErrorBoundary>
-          </ThemeProvider>
-        </StoreProvider>
-      </body>
+      <StoreProvider>
+        <ThemeProvider theme={theme}>
+          <ErrorBoundary>
+            <BodyWrapper>{children}</BodyWrapper>
+          </ErrorBoundary>
+        </ThemeProvider>
+      </StoreProvider>
     </html>
   );
 }

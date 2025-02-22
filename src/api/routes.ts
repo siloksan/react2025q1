@@ -12,8 +12,3 @@ export const CLIENT_ROUTES = {
   CARD_DETAILS: (id: string) => `/api/spacecrafts/${id}`,
   SET_THEME: '/api/theme',
 } as const;
-
-export const BROWSER_ROUTES = {
-  CARDS: '/',
-  CARD_DETAILS: (id: string) => `/spacecrafts/${id}`,
-} as const;

@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
     status: HTTP_CODES.OK,
     statusText: HTTP_ERRORS[HTTP_CODES.OK],
   };
+
   const res = new Response(null, init);
 
   ServerCookieManager.setCookie({
