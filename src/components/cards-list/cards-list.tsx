@@ -10,7 +10,7 @@ interface Props extends ComponentProps<'ul'> {
 
 export function CardsList({ className = '', cards }: Props) {
   const renderList = useCallback(() => {
-    if (!cards) {
+    if (cards.spacecrafts.length === 0) {
       return <h1 className={styles.not_found}>No spacecrafts found</h1>;
     }
 
