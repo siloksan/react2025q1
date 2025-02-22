@@ -26,8 +26,6 @@ export function Card({ cardInfo }: Props) {
     (state: AppState) => state.selectedCards.value
   );
 
-  console.log('selectedCards: ', selectedCards);
-
   let containerClassName = `${styles.container}`;
   const cardId = cardInfo.uid;
 

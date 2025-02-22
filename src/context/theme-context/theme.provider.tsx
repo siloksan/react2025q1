@@ -28,13 +28,3 @@ export function ThemeProvider(props: Props) {
 
   return <ThemeContext.Provider value={value} {...props} />;
 }
-
-// export function ThemeProviderWrapper({
-//   theme,
-//   children,
-// }: {
-//   theme: Themes;
-//   children: React.ReactNode;
-// }) {
-//   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
-// }

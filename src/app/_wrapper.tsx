@@ -15,7 +15,7 @@ export function BodyWrapper({ children }: { children: React.ReactNode }) {
   const { redirectWithQuery } = useQueryState();
   const ref = useRef<HTMLDivElement>(null);
 
-  const closeDetails: MouseEventHandler<HTMLBodyElement> = (event) => {
+  const closeDetails: MouseEventHandler<HTMLDivElement> = (event) => {
     if (ref.current?.contains(event.target as Node)) {
       return;
     }
@@ -24,21 +24,22 @@ export function BodyWrapper({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <body
-      data-theme={theme}
-      className={styles.layout}
-      role="button"
-      tabIndex={0}
-      onClick={closeDetails}
-      onKeyDown={() => {}}
-    >
+    <body data-theme={theme} className={styles.layout}>
       <Header />
-      <div className={styles.main}>
-        <h1 className={styles.title}>Star ships</h1>
-        <div ref={ref}>
-          <SearchBox />
-          {children}
-          <Flyout />
+      <div
+        className={styles.wrapper}
+        role="button"
+        tabIndex={0}
+        onClick={closeDetails}
+        onKeyDown={() => {}}
+      >
+        <div className={styles.main}>
+          <h1 className={styles.title}>Star ships</h1>
+          <div ref={ref}>
+            <SearchBox />
+            {children}
+            <Flyout />
+          </div>
         </div>
       </div>
     </body>
