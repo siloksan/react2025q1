@@ -4,12 +4,12 @@ import { Spacecraft } from '../../api/types';
 import { useAppDispatch, useAppSelector } from '@/store/store.hooks';
 import { AppState } from '@/store/store.types';
 import { usePathname } from 'next/navigation';
-
-import styles from './card.module.scss';
 import { BROWSER_ROUTES } from '@/api/routes';
 import { useQueryState } from '@/hooks';
 import { ComponentProps } from 'react';
 import { removeCard, selectCard } from '@/store/features';
+
+import styles from './card.module.scss';
 
 export const CARD_TESTID = 'card_testid';
 interface Props {
