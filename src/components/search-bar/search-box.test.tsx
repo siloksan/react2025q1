@@ -1,7 +1,6 @@
 import { SEARCH_PLACEHOLDER, SearchBox } from './search-box';
 import { Mock } from 'vitest';
 import { useQueryState } from '@/hooks/use-query-state';
-import { QUERY_KEYS } from '../../constants';
 import userEvent from '@testing-library/user-event';
 import { fireEvent } from '@testing-library/dom';
 import { useAppDispatch } from '@/store/store.hooks';
@@ -18,7 +17,7 @@ vi.mock('@/store/store.hooks', () => ({
 describe('SearchBox', () => {
   const dispatch = vi.fn();
   const queryValue = 'test';
-  const searchParams = { [QUERY_KEYS.NAME]: queryValue };
+  const searchParams = { get: vi.fn().mockReturnValue(queryValue) };
   const setQueryValue = vi.fn();
 
   beforeEach(() => {
@@ -80,5 +79,19 @@ describe('SearchBox', () => {
     await userEvent.click(btn);
 
     expect(setQueryValue).toHaveBeenCalledOnce();
+  });
+
+  it('should render default value', () => {
+    const searchParams = { get: vi.fn() };
+    (useQueryState as unknown as Mock).mockReturnValue({
+      setQueryValue,
+      searchParams,
+    });
+
+    const screen = render(<SearchBox />);
+
+    const input = screen.getByPlaceholderText(SEARCH_PLACEHOLDER);
+
+    expect(input).toHaveValue('');
   });
 });
