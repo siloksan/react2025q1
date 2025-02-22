@@ -5,9 +5,10 @@ import { Header } from '@/components/header/header';
 import { useQueryState } from '@/hooks';
 import { BROWSER_ROUTES } from '@/api/routes';
 import { MouseEventHandler, useRef } from 'react';
+import { SearchBox } from '@/components/search-bar/search-box';
+import { Flyout } from '@/components/flyout/flyout';
 
 import styles from './wrapper.module.scss';
-import { SearchBox } from '@/components/search-bar/search-box';
 
 export function BodyWrapper({ children }: { children: React.ReactNode }) {
   const { theme } = useThemeContext();
@@ -37,7 +38,7 @@ export function BodyWrapper({ children }: { children: React.ReactNode }) {
         <div ref={ref}>
           <SearchBox />
           {children}
-          {/* <Flyout /> */}
+          <Flyout />
         </div>
       </div>
     </body>

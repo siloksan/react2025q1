@@ -1,13 +1,15 @@
 'use client';
 
 import { Spacecraft } from '../../api/types';
-import { useAppSelector } from '@/store/store.hooks';
+import { useAppDispatch, useAppSelector } from '@/store/store.hooks';
 import { AppState } from '@/store/store.types';
 import { usePathname } from 'next/navigation';
 
 import styles from './card.module.scss';
 import { BROWSER_ROUTES } from '@/api/routes';
 import { useQueryState } from '@/hooks';
+import { ComponentProps } from 'react';
+import { removeCard, selectCard } from '@/store/features';
 
 export const CARD_TESTID = 'card_testid';
 interface Props {
@@ -18,10 +20,13 @@ export function Card({ cardInfo }: Props) {
   const { name, dateStatus = 'unknown' } = cardInfo;
   const pathName = usePathname();
   const { redirectWithQuery } = useQueryState();
+  const dispatch = useAppDispatch();
 
   const selectedCards = useAppSelector(
     (state: AppState) => state.selectedCards.value
   );
+
+  console.log('selectedCards: ', selectedCards);
 
   let containerClassName = `${styles.container}`;
   const cardId = cardInfo.uid;
@@ -46,17 +51,17 @@ export function Card({ cardInfo }: Props) {
     }
   };
 
-  // const handleCheck: ComponentProps<'input'>['onClick'] = (e) => {
-  //   e.stopPropagation();
-  //   if (e.target instanceof HTMLInputElement) {
-  //     const { checked } = e.target;
-  //     if (checked) {
-  //       dispatch(selectCard(cardInfo));
-  //     } else {
-  //       dispatch(removeCard(cardId));
-  //     }
-  //   }
-  // };
+  const handleCheck: ComponentProps<'input'>['onClick'] = (e) => {
+    e.stopPropagation();
+    if (e.target instanceof HTMLInputElement) {
+      const { checked } = e.target;
+      if (checked) {
+        dispatch(selectCard(cardInfo));
+      } else {
+        dispatch(removeCard(cardId));
+      }
+    }
+  };
 
   const isChecked = selectedCards.some((card) => cardId === card.uid);
 
@@ -69,7 +74,7 @@ export function Card({ cardInfo }: Props) {
       <input
         className={styles.checkbox}
         type="checkbox"
-        // onClick={handleCheck}
+        onClick={handleCheck}
         checked={isChecked}
         onChange={() => {}}
       />

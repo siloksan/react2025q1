@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/context/theme-context/theme.provider';
 import { ServerCookieManager } from '@/utils';
 import StoreProvider from '@/store/store.provider';
 import { BodyWrapper } from './_wrapper';
+import { cookies } from 'next/headers';
 
 import '@/styles/index.scss';
 
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: PropsWithChildren) {
-  const theme = await ServerCookieManager.getTheme();
+  const theme = await ServerCookieManager.getTheme(cookies);
 
   return (
     <html lang="en">

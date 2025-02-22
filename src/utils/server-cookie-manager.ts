@@ -1,6 +1,6 @@
 import { COOKIE_KEYS, CookieKeys } from '@/constants/cookie';
 import { Themes } from '@/context/theme-context/theme.constants';
-import { cookies } from 'next/headers';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 interface SetCookieOptions {
   res: Response;
@@ -27,7 +27,7 @@ function setCookie({
   );
 }
 
-async function getTheme() {
+async function getTheme(cookies: () => Promise<ReadonlyRequestCookies>) {
   const theme = (await cookies()).get(COOKIE_KEYS.THEME)?.value;
 
   if (!theme) {
