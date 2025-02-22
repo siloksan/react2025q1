@@ -1,88 +1,61 @@
-// import { useAppSelector } from '@/store/store.hooks';
-// import { useRouter } from 'next/router';
-// import { BROWSER_ROUTES } from '@/api/routes';
-// import { render } from '@testing-library/react';
-// import { DUMMY_SPACECRAFT_DETAILS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftDetailsResponse';
-// import { Mock } from 'vitest';
-// import userEvent from '@testing-library/user-event';
-// import { LOADER_TEST_ID } from '../shared/loader/loader';
-// import { CardDetails } from './card-details';
+import { BROWSER_ROUTES } from '@/api/routes';
+import { act, render, screen } from '@testing-library/react';
+import { DUMMY_SPACECRAFT_DETAILS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftDetailsResponse';
+import { Mock } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { CardDetails } from './card-details';
+import { useQueryState } from '@/hooks';
 
-// vi.mock('next/router', () => ({
-//   useRouter: vi.fn(),
-// }));
+vi.mock('@/hooks', () => ({
+  useQueryState: vi.fn(),
+}));
 
-// vi.mock('@/store/store.hooks', () => ({
-//   useAppSelector: vi.fn(),
-// }));
+describe('CardDetails', () => {
+  const redirectWithQuery = vi.fn();
+  const spacecraftResponse = Promise.resolve(DUMMY_SPACECRAFT_DETAILS_RESPONSE);
 
-// describe('CardDetails', () => {
-//   const push = vi.fn();
-//   const query = {};
-//   const router = { push, query };
-//   const value = DUMMY_SPACECRAFT_DETAILS_RESPONSE.spacecraft;
-//   const isLoading = false;
+  beforeEach(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => vi.fn());
+    (useQueryState as unknown as Mock).mockReturnValue({ redirectWithQuery });
+  });
 
-//   beforeEach(() => {
-//     vi.spyOn(console, 'error').mockImplementation(() => vi.fn());
-//     (useRouter as Mock).mockReturnValue(router);
-//     (useAppSelector as unknown as Mock).mockReturnValue({ value, isLoading });
-//   });
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
-//   afterEach(() => {
-//     vi.clearAllMocks();
-//   });
+  it('should render CardDetails and display spacecraft data', async () => {
+    await act(async () => {
+      render(<CardDetails spacecraftResponse={spacecraftResponse} />);
 
-//   it('should render CardDetails and display spacecraft data', () => {
-//     const screen = render(<CardDetails />);
+      await spacecraftResponse;
+    });
 
-//     expect(screen.getByText(/Name:/)).toBeInTheDocument();
-//     expect(screen.getByText(/Class:/)).toBeInTheDocument();
-//   });
+    expect(screen.getByText(/Name:/)).toBeInTheDocument();
+    expect(screen.getByText(/Class:/)).toBeInTheDocument();
+  });
 
-//   it('should handle close button click', async () => {
-//     const screen = render(<CardDetails />);
+  it('should handle close button click', async () => {
+    await act(async () => {
+      render(<CardDetails spacecraftResponse={spacecraftResponse} />);
 
-//     expect(screen.getByText(/Name:/)).toBeInTheDocument();
+      await spacecraftResponse;
+    });
 
-//     const user = userEvent.setup();
-//     await user.click(screen.getByRole('button', { name: /Close details/i }));
+    expect(screen.getByText(/Name:/)).toBeInTheDocument();
 
-//     expect(push).toHaveBeenCalledWith({
-//       pathname: `${BROWSER_ROUTES.CARDS}`,
-//       query: {},
-//     });
-//   });
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Close details/i }));
 
-//   it('should display loader when fetching data', () => {
-//     const isLoading = true;
-//     (useAppSelector as unknown as Mock).mockReturnValue({ value, isLoading });
+    expect(redirectWithQuery).toHaveBeenCalledWith(BROWSER_ROUTES.CARDS);
+  });
 
-//     const screen = render(<CardDetails />);
+  it('should not render return null when there is no data', async () => {
+    await act(async () => {
+      render(<CardDetails spacecraftResponse={null} />);
+    });
 
-//     expect(screen.getByTestId(LOADER_TEST_ID)).toBeInTheDocument();
-//   });
+    const classElement = screen.queryByText(/Class:/);
 
-//   it('should not render return null when there is no data', () => {
-//     const value = {
-//       ...DUMMY_SPACECRAFT_DETAILS_RESPONSE.spacecraft,
-//       spacecraftClass: null,
-//     };
-//     (useAppSelector as unknown as Mock).mockReturnValue({ value, isLoading });
-
-//     const screen = render(<CardDetails />);
-
-//     const classElement = screen.queryByText(/Class:/);
-
-//     expect(classElement).not.toBeInTheDocument();
-//   });
-
-//   it('should return null when there is no data', () => {
-//     const value = null;
-//     (useAppSelector as unknown as Mock).mockReturnValue({ value, isLoading });
-
-//     const screen = render(<CardDetails />);
-
-//     expect(screen.container).toBeEmptyDOMElement();
-//   });
-// });
+    expect(classElement).not.toBeInTheDocument();
+  });
+});

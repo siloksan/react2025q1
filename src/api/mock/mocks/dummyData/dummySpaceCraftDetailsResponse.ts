@@ -1,3 +1,5 @@
+import { SpacecraftResponse } from '@/api/types';
+
 export const DUMMY_SPACECRAFT_DETAILS_RESPONSE = {
   spacecraft: {
     uid: 'SRMA0000278282',
@@ -42,4 +44,4 @@ export const DUMMY_SPACECRAFT_DETAILS_RESPONSE = {
       },
     ],
   },
-};
+} as unknown as SpacecraftResponse;

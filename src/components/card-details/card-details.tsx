@@ -22,11 +22,7 @@ export function CardDetails({ spacecraftResponse }: Props) {
   const { spacecraft } = data;
 
   function closeDetails() {
-    redirectWithQuery(`${BROWSER_ROUTES.CARDS}`);
-  }
-
-  if (!spacecraft) {
-    return null;
+    redirectWithQuery(BROWSER_ROUTES.CARDS);
   }
 
   const {
