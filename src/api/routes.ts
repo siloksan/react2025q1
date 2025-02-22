@@ -7,6 +7,11 @@ export const API_ROUTES = {
 
 export type ApiRoutes = (typeof API_ROUTES)[keyof typeof API_ROUTES];
 
+export const BROWSER_ROUTES = {
+  CARDS: '/',
+  CARD_DETAILS: (id: string) => `/spacecrafts/${id}`,
+} as const;
+
 export const CLIENT_ROUTES = {
   CARDS: '/api/cards',
   CARD_DETAILS: (id: string) => `/api/spacecrafts/${id}`,

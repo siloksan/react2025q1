@@ -28,5 +28,9 @@ export function useQueryState() {
     router.push(`${pathName}?${newSearchParams.toString()}`);
   }
 
-  return { searchParams: newSearchParams, setQueryValue };
+  function redirectWithQuery(newPathName: string) {
+    router.push(`${newPathName}?${newSearchParams.toString()}`);
+  }
+
+  return { searchParams: newSearchParams, setQueryValue, redirectWithQuery };
 }

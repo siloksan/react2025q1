@@ -6,6 +6,8 @@ import { AppState } from '@/store/store.types';
 import { usePathname } from 'next/navigation';
 
 import styles from './card.module.scss';
+import { BROWSER_ROUTES } from '@/api/routes';
+import { useQueryState } from '@/hooks';
 
 export const CARD_TESTID = 'card_testid';
 interface Props {
@@ -14,10 +16,8 @@ interface Props {
 
 export function Card({ cardInfo }: Props) {
   const { name, dateStatus = 'unknown' } = cardInfo;
-  // const dispatch = useAppDispatch();
   const pathName = usePathname();
-
-  // const { query } = router;
+  const { redirectWithQuery } = useQueryState();
 
   const selectedCards = useAppSelector(
     (state: AppState) => state.selectedCards.value
@@ -30,30 +30,21 @@ export function Card({ cardInfo }: Props) {
     containerClassName += ` ${styles.active}`;
   }
 
-  // const newQuery = omitKeyFromObject('spacecraftId', query);
+  function openDetails() {
+    redirectWithQuery(`${BROWSER_ROUTES.CARD_DETAILS(cardInfo.uid)}`);
+  }
 
-  // function openDetails() {
-  //   dispatch(setDetailsLoading(true));
-  //   router.push({
-  //     pathname: `${BROWSER_ROUTES.CARD_DETAILS(cardInfo.uid)}`,
-  //     query: { ...newQuery },
-  //   });
-  // }
+  function closeDetails() {
+    redirectWithQuery(`${BROWSER_ROUTES.CARDS}`);
+  }
 
-  // function closeDetails() {
-  //   router.push({
-  //     pathname: `${BROWSER_ROUTES.CARDS}`,
-  //     query: { ...newQuery },
-  //   });
-  // }
-
-  // const handleClick = () => {
-  //   if (cardId === paramsId) {
-  //     // closeDetails();
-  //   } else {
-  //     // openDetails();
-  //   }
-  // };
+  const handleClick = () => {
+    if (pathName.includes(cardId)) {
+      closeDetails();
+    } else {
+      openDetails();
+    }
+  };
 
   // const handleCheck: ComponentProps<'input'>['onClick'] = (e) => {
   //   e.stopPropagation();
@@ -72,7 +63,7 @@ export function Card({ cardInfo }: Props) {
   return (
     <li
       className={containerClassName}
-      // onClick={handleClick}
+      onClick={handleClick}
       data-testid={CARD_TESTID}
     >
       <input

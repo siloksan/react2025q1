@@ -7,6 +7,6 @@ export type NextApiRequestWithBody<T> = NextRequest & {
 };
 
 export interface NextPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ spacecraftId: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
