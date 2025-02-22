@@ -7,6 +7,7 @@ import { BROWSER_ROUTES } from '@/api/routes';
 import { MouseEventHandler, useRef } from 'react';
 
 import styles from './wrapper.module.scss';
+import { SearchBox } from '@/components/search-bar/search-box';
 
 export function BodyWrapper({ children }: { children: React.ReactNode }) {
   const { theme } = useThemeContext();
@@ -34,7 +35,7 @@ export function BodyWrapper({ children }: { children: React.ReactNode }) {
       <div className={styles.main}>
         <h1 className={styles.title}>Star ships</h1>
         <div ref={ref}>
-          {/* <SearchBox /> */}
+          <SearchBox />
           {children}
           {/* <Flyout /> */}
         </div>
