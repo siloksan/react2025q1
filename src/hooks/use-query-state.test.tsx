@@ -1,12 +1,14 @@
 import { useStorage } from './use-storage';
-import { useRouter } from 'next/router';
 import { useQueryState } from './use-query-state';
 import { Mock } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { QUERY_KEYS } from '../constants/query-keys';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-vi.mock('next/router', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
+  usePathname: vi.fn(),
+  useSearchParams: vi.fn(),
 }));
 
 vi.mock('./use-storage', () => ({
@@ -15,8 +17,10 @@ vi.mock('./use-storage', () => ({
 
 describe('useQueryState', () => {
   const setValueInStorage = vi.fn();
-  const query = {};
   const push = vi.fn();
+  const queryValue = 'test';
+  const query = { [QUERY_KEYS.NAME]: queryValue };
+  const pathName = vi.fn();
 
   beforeEach(() => {
     (useStorage as Mock).mockReturnValue({
@@ -24,20 +28,22 @@ describe('useQueryState', () => {
     });
 
     (useRouter as Mock).mockReturnValue({
-      query,
       push,
-      pathname: '/test-path',
     });
+
+    (usePathname as Mock).mockReturnValue(pathName);
+
+    (useSearchParams as Mock).mockReturnValue(new URLSearchParams(query));
   });
 
   afterEach(() => {
     vi.clearAllMocks();
   });
+
   it('should initialize with searchParams and setQueryValue', () => {
     const { result } = renderHook(() => useQueryState());
 
-    expect(result.current.searchParams).toBe(query);
-    expect(typeof result.current.setQueryValue).toBe('function');
+    expect(result.current.searchParams.get(QUERY_KEYS.NAME)).toBe(queryValue);
   });
 
   it('should set query value and update local storage', () => {
@@ -51,10 +57,6 @@ describe('useQueryState', () => {
     });
 
     expect(setValueInStorage).toHaveBeenCalledWith(QUERY_KEYS.NAME, queryValue);
-    expect(push).toHaveBeenCalledWith({
-      pathname: '/test-path',
-      query: { [QUERY_KEYS.NAME]: queryValue },
-    });
   });
 
   it('should remove query value and update local storage', () => {
@@ -65,10 +67,18 @@ describe('useQueryState', () => {
     });
 
     expect(setValueInStorage).toHaveBeenCalledWith(QUERY_KEYS.NAME, '');
+  });
 
-    expect(push).toHaveBeenCalledWith({
-      pathname: '/test-path',
-      query: {},
+  it('should redirect with new path and query', () => {
+    const { result } = renderHook(() => useQueryState());
+    const newPathName = '/new-path';
+
+    act(() => {
+      result.current.redirectWithQuery(newPathName);
     });
+
+    expect(push).toHaveBeenCalledWith(
+      `${newPathName}?${new URLSearchParams(query).toString()}`
+    );
   });
 });
