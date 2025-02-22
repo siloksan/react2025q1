@@ -22,7 +22,6 @@ export function Pagination({ totalPages, currentPage }: PropsPagination) {
   const { current } = styles;
 
   const handleClick = (pageNumber: number) => {
-    console.log('pageNumber: ', pageNumber);
     const newQueries = [{ key: QUERY_KEYS.PAGE, value: pageNumber.toString() }];
     setQueryValue(newQueries);
   };

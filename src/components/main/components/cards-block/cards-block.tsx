@@ -2,19 +2,21 @@ import { CardsList } from '@/components/cards-list/cards-list';
 import { PropsWithChildren, Suspense, use } from 'react';
 import { Pagination } from '@/components/pagination/pagination';
 import { PAGE_OFFSET } from '@/constants/view';
-import { SpacecraftResponse, SpacecraftsResponse } from '@/api/types';
-
-import styles from './cards-block.module.scss';
+import { SpacecraftsResponse } from '@/api/types';
 import { CardDetails } from '@/components/card-details/card-details';
 import { Loader } from '@/components/shared/loader/loader';
+import { getSpacecraft } from '@/app/api/spacecrafts/[spacecraftId]/get-spacecraft';
+
+import styles from './cards-block.module.scss';
 
 interface Props extends PropsWithChildren {
   cardsResponse: Promise<SpacecraftsResponse>;
-  spacecraftResponse: Promise<SpacecraftResponse> | null;
+  spacecraftId?: string;
 }
 
-export function CardsBlock({ cardsResponse, spacecraftResponse }: Props) {
+export function CardsBlock({ cardsResponse, spacecraftId }: Props) {
   const cards = use(cardsResponse);
+  const spacecraftResponse = spacecraftId ? getSpacecraft(spacecraftId) : null;
 
   const {
     page: { pageNumber, totalPages },
