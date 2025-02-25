@@ -1,12 +1,14 @@
-import { Welcome } from '../welcome/welcome';
-
 export function meta() {
   return [
-    { title: 'New React Router App' },
-    { name: 'description', content: 'Welcome to React Router!' },
+    { title: 'Star Trek' },
+    { name: 'description', content: 'Client for Star Trek API' },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <>
+      <h1>Home page</h1>
+    </>
+  );
 }
