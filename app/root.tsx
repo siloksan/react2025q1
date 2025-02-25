@@ -18,6 +18,11 @@ import { getTheme } from './utils';
 import styles from './root.module.scss';
 import './styles/index.scss';
 
+export async function loader({ request }: Route.LoaderArgs) {
+  const theme = await getTheme(request);
+  return { theme };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -33,10 +38,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </StoreProvider>
     </html>
   );
-}
-export async function loader({ request }: Route.LoaderArgs) {
-  const theme = await getTheme(request);
-  return { theme };
 }
 
 export default function App({ loaderData }: Route.ComponentProps) {

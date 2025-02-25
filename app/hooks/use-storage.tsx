@@ -1,22 +1,22 @@
-// import { QueryKeys } from '../constants/query-keys';
+import type { QueryKeys } from '~/constants';
 
-// export type LocalStorageKeys = QueryKeys;
+export type LocalStorageKeys = QueryKeys;
 
-// export function useStorage() {
-//   if (typeof window === 'undefined') {
-//     return {
-//       getValueFromStorage: () => null,
-//       setValueInStorage: () => null,
-//     };
-//   }
+export function useStorage() {
+  if (typeof window === 'undefined') {
+    return {
+      getValueFromStorage: () => null,
+      setValueInStorage: () => null,
+    };
+  }
 
-//   function getValueFromStorage(key: LocalStorageKeys) {
-//     return localStorage.getItem(key);
-//   }
+  function getValueFromStorage(key: LocalStorageKeys) {
+    return localStorage.getItem(key);
+  }
 
-//   function setValueInStorage(key: LocalStorageKeys, value: string) {
-//     localStorage.setItem(key, value);
-//   }
+  function setValueInStorage(key: LocalStorageKeys, value: string) {
+    localStorage.setItem(key, value);
+  }
 
-//   return { getValueFromStorage, setValueInStorage };
-// }
+  return { getValueFromStorage, setValueInStorage };
+}
