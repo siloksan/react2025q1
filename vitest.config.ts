@@ -9,7 +9,7 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '~': path.resolve(__dirname, './app'),
     },
   },
   test: {
@@ -17,7 +17,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./setupTests.ts'],
     coverage: {
-      include: ['**/*.tsx'],
+      include: ['app/**/*.{tsx}'],
       exclude: [
         '**/node_modules/**',
         '**/*.test.tsx',
