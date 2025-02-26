@@ -11,11 +11,15 @@ import StoreProvider from './store/store.provider';
 import { ThemeProvider } from './context/theme-context/theme.provider';
 import { Header } from './components/header/header';
 import { useThemeContext } from './context/theme-context/theme.context';
-import { useRef, type PropsWithChildren } from 'react';
+import { useRef, type MouseEventHandler, type PropsWithChildren } from 'react';
 import { getTheme } from './utils';
+import { SearchBox } from './components/search-bar/search-box';
+import { Flyout } from './components/flyout/flyout';
+import { useQueryState } from './hooks/use-query-state';
+import { BROWSER_ROUTES } from './service/routes';
 
-import styles from './root.module.scss';
 import './styles/index.scss';
+import styles from './root.module.scss';
 
 export async function loader({ request }: Route.LoaderArgs) {
   const theme = await getTheme(request);
@@ -58,6 +62,15 @@ export default function App({ loaderData }: Route.ComponentProps) {
 function ContentWrapper({ children }: PropsWithChildren) {
   const { theme } = useThemeContext();
   const ref = useRef<HTMLDivElement>(null);
+  const { redirectWithQuery } = useQueryState();
+
+  const closeDetails: MouseEventHandler<HTMLDivElement> = (event) => {
+    if (ref.current?.contains(event.target as Node)) {
+      return;
+    }
+
+    redirectWithQuery(`${BROWSER_ROUTES.CARDS}`);
+  };
 
   return (
     <div data-theme={theme} className={styles.layout}>
@@ -66,15 +79,15 @@ function ContentWrapper({ children }: PropsWithChildren) {
         className={styles.wrapper}
         role="button"
         tabIndex={0}
-        // onClick={closeDetails}
+        onClick={closeDetails}
         onKeyDown={() => {}}
       >
         <div className={styles.main}>
           <h1 className={styles.title}>Star ships</h1>
           <div ref={ref}>
-            {/* <SearchBox /> */}
+            <SearchBox />
             {children}
-            {/* <Flyout /> */}
+            <Flyout />
           </div>
         </div>
       </div>

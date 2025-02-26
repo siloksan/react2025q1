@@ -19,9 +19,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
   const page = Number(url.searchParams.get(QUERY_KEYS.PAGE) ?? FIRST_PAGE);
   const searchTerm = url.searchParams.get(QUERY_KEYS.NAME) ?? '';
-
   const cardsResponse = await getCards({ name: searchTerm, page });
-  console.log('{ name: searchTerm, page }: ', { name: searchTerm, page });
 
   return data({ cardsResponse });
 }
