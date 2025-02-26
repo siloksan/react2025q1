@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from 'react-router';
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 import { useStorage } from './use-storage';
 import { QUERY_KEYS, type QueryKeys } from '../constants/query-keys';
 import { useEffect } from 'react';
@@ -11,22 +11,25 @@ interface NewQueries {
 /**
  * Custom hook to manage query parameters in the URL and synchronize them with local storage.
  *
- * @returns {Object} An object containing:
+ * @returns {object} An object containing:
  * - `searchParams`: The current URL search parameters.
- * - `setQueryValue`: A function to update the query parameters.
+ * - `setQueryValue`: A function to update query parameters and local storage.
+ * - `params`: The current URL parameters.
+ * - `redirectWithQuery`: A function to navigate to a new path with the current query parameters.
  *
  * @example
- * const { searchParams, setQueryValue } = useQueryState();
+ * const { searchParams, setQueryValue, params, redirectWithQuery } = useQueryState();
  *
- * // To set a query parameter
- * setQueryValue([{ key: 'exampleKey', value: 'exampleValue' }]);
+ * // Update query parameters
+ * setQueryValue([{ key: 'page', value: '2' }]);
  *
- * // To remove a query parameter
- * setQueryValue([{ key: 'exampleKey', value: null }]);
+ * // Redirect to a new path with the current query parameters
+ * redirectWithQuery('/new-path');
  */
 export function useQueryState() {
   const { getValueFromStorage, setValueInStorage } = useStorage();
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const params = useParams();
 
   function setQueryValue(newQueries: NewQueries[]) {
@@ -43,6 +46,10 @@ export function useQueryState() {
     });
 
     setSearchParams(newParams);
+  }
+
+  function redirectWithQuery(newPathName: string) {
+    navigate(`${newPathName}?${searchParams.toString()}`);
   }
 
   useEffect(() => {
@@ -64,5 +71,5 @@ export function useQueryState() {
     });
   }, []);
 
-  return { searchParams, setQueryValue, params };
+  return { searchParams, setQueryValue, params, redirectWithQuery };
 }

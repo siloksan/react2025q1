@@ -1,11 +1,12 @@
 import { getCards } from '~/service/handlers';
-import type { Route } from './+types/cards-block';
-import styles from './cards-block.module.scss';
 import { QUERY_KEYS } from '~/constants';
 import { FIRST_PAGE, PAGE_OFFSET } from '~/constants/view';
 import { data, Outlet } from 'react-router';
-import { CardsList } from '~/components/shared/cards-list/cards-list';
+import { CardsList } from '~/components/cards-list/cards-list';
 import { Pagination } from '~/components/shared/pagination/pagination';
+import type { Route } from './+types/root-layout';
+
+import styles from './root-layout.module.scss';
 
 export function meta() {
   return [
@@ -20,19 +21,13 @@ export async function loader({ request }: Route.LoaderArgs) {
   const searchTerm = url.searchParams.get(QUERY_KEYS.NAME) ?? '';
 
   const cardsResponse = await getCards({ name: searchTerm, page });
+  console.log('{ name: searchTerm, page }: ', { name: searchTerm, page });
 
   return data({ cardsResponse });
 }
 
-// interface Props extends PropsWithChildren {
-//   cardsResponse: Promise<SpacecraftsResponse>;
-//   spacecraftId?: string;
-// }
-
 export default function CardsBlock({ loaderData }: Route.ComponentProps) {
   const cards = loaderData.cardsResponse;
-  // const cards = use(cardsResponse);
-  // const spacecraftResponse = spacecraftId ? getSpacecraft(spacecraftId) : null;
 
   const {
     page: { pageNumber, totalPages },
@@ -43,7 +38,6 @@ export default function CardsBlock({ loaderData }: Route.ComponentProps) {
       <div className={styles.container}>
         <CardsList cards={cards} />
         <Outlet />
-        {/* <CardDetails spacecraftResponse={spacecraftResponse} /> */}
       </div>
       <Pagination
         currentPage={pageNumber + PAGE_OFFSET}

@@ -9,7 +9,6 @@ import {
 import type { Route } from './+types/root';
 import StoreProvider from './store/store.provider';
 import { ThemeProvider } from './context/theme-context/theme.provider';
-import { Themes } from './context/theme-context/theme.constants';
 import { Header } from './components/header/header';
 import { useThemeContext } from './context/theme-context/theme.context';
 import { useRef, type PropsWithChildren } from 'react';
@@ -33,9 +32,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <StoreProvider>
-        <ThemeProvider theme={Themes.light}>{children}</ThemeProvider>
-      </StoreProvider>
+      <body>
+        <StoreProvider>{children}</StoreProvider>
+      </body>
     </html>
   );
 }
@@ -44,7 +43,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
   const { theme } = loaderData;
 
   return (
-    <body>
+    <>
       <ThemeProvider theme={theme}>
         <ContentWrapper>
           <Outlet />
@@ -52,7 +51,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
       </ThemeProvider>
       <ScrollRestoration />
       <Scripts />
-    </body>
+    </>
   );
 }
 

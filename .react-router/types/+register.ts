@@ -8,5 +8,8 @@ declare module "react-router" {
 
 type Params = {
   "/": {};
+  "/spacecrafts/:spacecraftId": {
+    "spacecraftId": string;
+  };
   "/api/theme": {};
 };
