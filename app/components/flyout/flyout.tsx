@@ -1,5 +1,3 @@
-'use client';
-
 import { useAppDispatch, useAppSelector } from '~/store/store.hooks';
 import { Button } from '../shared/button/button';
 import type { AppState } from '~/store/store.types';
