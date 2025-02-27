@@ -1,61 +1,43 @@
-// import { BROWSER_ROUTES } from '@/api/routes';
-// import { act, render, screen } from '@testing-library/react';
-// import { DUMMY_SPACECRAFT_DETAILS_RESPONSE } from '../../api/mock/mocks/dummyData/dummySpaceCraftDetailsResponse';
-// import { Mock } from 'vitest';
-// import userEvent from '@testing-library/user-event';
-// import { CardDetails } from './card-details';
-// import { useQueryState } from '@/hooks';
+import { render, screen } from '@testing-library/react';
+import { type Mock } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { CardDetails } from './card-details';
+import { DUMMY_SPACECRAFT_DETAILS_RESPONSE } from '~/service/mock/mocks/dummyData/dummySpaceCraftDetailsResponse';
+import { useQueryState } from '~/hooks/use-query-state';
+import { BROWSER_ROUTES } from '~/service/routes';
 
-// vi.mock('@/hooks', () => ({
-//   useQueryState: vi.fn(),
-// }));
+vi.mock('~/hooks/use-query-state', () => ({
+  useQueryState: vi.fn(),
+}));
 
-// describe('CardDetails', () => {
-//   const redirectWithQuery = vi.fn();
-//   const spacecraftResponse = Promise.resolve(DUMMY_SPACECRAFT_DETAILS_RESPONSE);
+describe('CardDetails', () => {
+  const redirectWithQuery = vi.fn();
+  const { spacecraft } = DUMMY_SPACECRAFT_DETAILS_RESPONSE;
 
-//   beforeEach(() => {
-//     vi.spyOn(console, 'error').mockImplementation(() => vi.fn());
-//     (useQueryState as unknown as Mock).mockReturnValue({ redirectWithQuery });
-//   });
+  beforeEach(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => vi.fn());
+    (useQueryState as Mock).mockReturnValue({ redirectWithQuery });
+  });
 
-//   afterEach(() => {
-//     vi.clearAllMocks();
-//   });
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
-//   it('should render CardDetails and display spacecraft data', async () => {
-//     await act(async () => {
-//       render(<CardDetails spacecraftResponse={spacecraftResponse} />);
+  it('should render CardDetails and display spacecraft data', () => {
+    render(<CardDetails spacecraft={spacecraft} />);
 
-//       await spacecraftResponse;
-//     });
+    expect(screen.getByText(/Name:/)).toBeInTheDocument();
+    expect(screen.getByText(/Class:/)).toBeInTheDocument();
+  });
 
-//     expect(screen.getByText(/Name:/)).toBeInTheDocument();
-//     expect(screen.getByText(/Class:/)).toBeInTheDocument();
-//   });
+  it('should handle close button click', async () => {
+    render(<CardDetails spacecraft={spacecraft} />);
 
-//   it('should handle close button click', async () => {
-//     await act(async () => {
-//       render(<CardDetails spacecraftResponse={spacecraftResponse} />);
+    expect(screen.getByText(/Name:/)).toBeInTheDocument();
 
-//       await spacecraftResponse;
-//     });
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button', { name: /Close details/i }));
 
-//     expect(screen.getByText(/Name:/)).toBeInTheDocument();
-
-//     const user = userEvent.setup();
-//     await user.click(screen.getByRole('button', { name: /Close details/i }));
-
-//     expect(redirectWithQuery).toHaveBeenCalledWith(BROWSER_ROUTES.CARDS);
-//   });
-
-//   it('should not render return null when there is no data', async () => {
-//     await act(async () => {
-//       render(<CardDetails spacecraftResponse={null} />);
-//     });
-
-//     const classElement = screen.queryByText(/Class:/);
-
-//     expect(classElement).not.toBeInTheDocument();
-//   });
-// });
+    expect(redirectWithQuery).toHaveBeenCalledWith(BROWSER_ROUTES.CARDS);
+  });
+});
