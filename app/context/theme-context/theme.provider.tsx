@@ -1,5 +1,3 @@
-'use client';
-
 import { type PropsWithChildren, useCallback, useMemo, useState } from 'react';
 import { Themes } from './theme.constants';
 import { ThemeContext } from './theme.context';

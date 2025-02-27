@@ -1,20 +1,32 @@
-// import { ThemeToggle } from './theme-toggle';
-// import { render } from '@testing-library/react';
-// import { Themes } from '@/context/theme-context/theme.constants';
-// import { ThemeProvider } from '@/context/theme-context/theme.provider';
+import { ThemeProvider } from '~/context/theme-context/theme.provider';
+import { ThemeToggle } from './theme-toggle';
+import { render } from '@testing-library/react';
+import { Themes } from '~/context/theme-context/theme.constants';
+import { useFetcher } from 'react-router';
+import type { Mock } from 'vitest';
 
-// vi.mock('../../context/theme.context');
+vi.mock('react-router', () => ({
+  useFetcher: vi.fn(),
+}));
 
-// describe('ThemeToggle', () => {
-//   const TESTID = 'testid';
+describe('ThemeToggle', () => {
+  const TESTID = 'testid';
+  beforeEach(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => vi.fn());
+    (useFetcher as Mock).mockReturnValue(vi.fn());
+  });
 
-//   it('should render the toggle switch', () => {
-//     const screen = render(
-//       <ThemeProvider theme={Themes.light}>
-//         <ThemeToggle testid={TESTID} />
-//       </ThemeProvider>
-//     );
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
 
-//     expect(screen.getByTestId(TESTID)).toBeInTheDocument();
-//   });
-// });
+  it('should render the toggle switch', () => {
+    const screen = render(
+      <ThemeProvider theme={Themes.light}>
+        <ThemeToggle testid={TESTID} />
+      </ThemeProvider>
+    );
+
+    expect(screen.getByTestId(TESTID)).toBeInTheDocument();
+  });
+});
