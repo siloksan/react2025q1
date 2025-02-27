@@ -1,18 +1,19 @@
 import type { Spacecraft } from '~/service/types';
-import styles from './card.module.scss';
-import { useQueryState } from '~/hooks/use-query-state';
 import { BROWSER_ROUTES } from '~/service/routes';
-import { useAppDispatch, useAppSelector } from '~/store/store.hooks';
 import type { AppState } from '~/store/store.types';
 import { removeCard, selectCard } from '~/store/features';
 import type { ComponentProps } from 'react';
+import type { WithTestId } from '~/types';
+import { useAppDispatch, useAppSelector } from '~/store/store.hooks';
+import { useQueryState } from '~/hooks/use-query-state';
 
-export const CARD_TESTID = 'card_testid';
+import styles from './card.module.scss';
+
 interface Props {
   readonly cardInfo: Spacecraft;
 }
 
-export function Card({ cardInfo }: Props) {
+export function Card({ cardInfo, testid }: WithTestId<Props>) {
   const { name, dateStatus = 'unknown' } = cardInfo;
   const { params, redirectWithQuery } = useQueryState();
   const { spacecraftId } = params;
@@ -63,7 +64,7 @@ export function Card({ cardInfo }: Props) {
     <li
       className={containerClassName}
       onClick={handleClick}
-      data-testid={CARD_TESTID}
+      data-testid={testid}
     >
       <input
         className={styles.checkbox}
