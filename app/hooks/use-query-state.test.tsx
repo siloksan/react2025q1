@@ -1,12 +1,14 @@
-import { useSearchParams } from 'react-router';
 import { useStorage } from './use-storage';
 import { QUERY_KEYS } from '../constants/query-keys';
 import { type Mock } from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import { useQueryState } from './use-query-state';
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 vi.mock('react-router', () => ({
   useSearchParams: vi.fn(),
+  useParams: vi.fn(),
+  useNavigate: vi.fn(),
 }));
 
 vi.mock('./use-storage', () => ({
@@ -14,15 +16,14 @@ vi.mock('./use-storage', () => ({
 }));
 
 describe('useQueryState', () => {
-  let getValueFromStorage: Mock;
-  let setValueInStorage: Mock;
-  let setSearchParams: Mock;
+  const getValueFromStorage = vi.fn();
+  const setValueInStorage = vi.fn();
+  const setSearchParams = vi.fn();
+  const navigate = vi.fn();
+  const params = vi.fn();
   let searchParams: URLSearchParams;
 
   beforeEach(() => {
-    getValueFromStorage = vi.fn();
-    setValueInStorage = vi.fn();
-    setSearchParams = vi.fn();
     searchParams = new URLSearchParams();
 
     (useStorage as Mock).mockReturnValue({
@@ -31,6 +32,8 @@ describe('useQueryState', () => {
     });
 
     (useSearchParams as Mock).mockReturnValue([searchParams, setSearchParams]);
+    (useParams as Mock).mockReturnValue(params);
+    (useNavigate as Mock).mockReturnValue(navigate);
   });
 
   afterEach(() => {
