@@ -12,6 +12,7 @@
     "test": "vitest --coverage",
     "test:watch": "vitest --watch",
     "prepare": "husky",
+    "format": "prettier --check ./app",
     "format:fix": "prettier --write ./app"
   },
   "dependencies": {
