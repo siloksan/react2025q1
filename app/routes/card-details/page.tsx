@@ -3,7 +3,7 @@ import { getSpacecraft } from '~/service/handlers';
 import type { Route } from './+types/page';
 import { CardDetails } from '~/components/card-details/card-details';
 
-export async function loader({ params }: Route.LoaderArgs) {
+export async function loader({ params }: Pick<Route.LoaderArgs, 'params'>) {
   const { spacecraftId } = params;
   const spacecraftResponse = await getSpacecraft(spacecraftId);
   return data({ spacecraftResponse });
@@ -11,7 +11,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 
 export default function CardsDetailsWrapper({
   loaderData,
-}: Route.ComponentProps) {
+}: Pick<Route.ComponentProps, 'loaderData'>) {
   const { spacecraftResponse } = loaderData;
 
   return <CardDetails spacecraft={spacecraftResponse.spacecraft} />;

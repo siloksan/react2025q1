@@ -2,13 +2,12 @@ import { createCookie } from 'react-router';
 import { COOKIE_KEYS } from '~/constants/cookie';
 import { Themes } from '~/context/theme-context/theme.constants';
 
-const MAX_AGE = 365 * 24 * 60 * 60 * 1000;
+export const MAX_AGE = 365 * 24 * 60 * 60 * 1000;
 
 export const cookieTheme = createCookie(COOKIE_KEYS.THEME, {
   path: '/',
   httpOnly: true,
   secure: true,
-  expires: new Date(Date.now() + MAX_AGE),
   maxAge: MAX_AGE,
 });
 

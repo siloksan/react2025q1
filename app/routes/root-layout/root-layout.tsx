@@ -15,7 +15,7 @@ export function meta() {
   ];
 }
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader({ request }: Pick<Route.LoaderArgs, 'request'>) {
   const url = new URL(request.url);
   const page = Number(url.searchParams.get(QUERY_KEYS.PAGE) ?? FIRST_PAGE);
   const searchTerm = url.searchParams.get(QUERY_KEYS.NAME) ?? '';
@@ -24,7 +24,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   return data({ cardsResponse });
 }
 
-export default function CardsBlock({ loaderData }: Route.ComponentProps) {
+export default function RootLayout({
+  loaderData,
+}: Pick<Route.ComponentProps, 'loaderData'>) {
   const cards = loaderData.cardsResponse;
 
   const {

@@ -21,7 +21,7 @@ import { BROWSER_ROUTES } from './service/routes';
 import './styles/index.scss';
 import styles from './root.module.scss';
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader({ request }: Pick<Route.LoaderArgs, 'request'>) {
   const theme = await getTheme(request);
   return { theme };
 }
@@ -59,7 +59,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
   );
 }
 
-function ContentWrapper({ children }: PropsWithChildren) {
+export function ContentWrapper({ children }: PropsWithChildren) {
   const { theme } = useThemeContext();
   const ref = useRef<HTMLDivElement>(null);
   const { redirectWithQuery } = useQueryState();
@@ -69,7 +69,7 @@ function ContentWrapper({ children }: PropsWithChildren) {
       return;
     }
 
-    redirectWithQuery(`${BROWSER_ROUTES.CARDS}`);
+    redirectWithQuery(BROWSER_ROUTES.CARDS);
   };
 
   return (
@@ -95,7 +95,9 @@ function ContentWrapper({ children }: PropsWithChildren) {
   );
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export function ErrorBoundary({
+  error,
+}: Pick<Route.ErrorBoundaryProps, 'error'>) {
   let message = 'Oops!';
   let details = 'An unexpected error occurred.';
   let stack: string | undefined;
