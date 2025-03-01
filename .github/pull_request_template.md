@@ -1,25 +1,25 @@
-1. Task: [Redux. Redux Toolkit, RTK Query. Context api.](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/redux.md)
+1. Task: [Next.js. Server Side Rendering](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/nextjs-ssr-ssg.md)
 2. Screenshot:
-3. Deploy: [deploy](https://react2025q1.netlify.app/)
-4. Done 2025-02-20 / deadline 2025-02-24
-5. Score: 200/200
+3. Deploy: -
+4. Done 2025-03-01 / deadline 2024-03-10
+5. Score: 150/150
 
 ## Points
 
-- [x] RTK query is used for api calls - 50
-- [x] Selected items are managed through the redux store, selected items are persistent across pages - 50
-- [x] Flyout component is showed/hidden based on the presence of selected items, displays the number of selected items - 20
-- [x] "Unselect all" button and "Download" button work according to the requirements - 35
-- [x] User can switch the theme of the application - 45
+- [x] Next.js Pages API is used in "nextjs-ssr-pages-api" branch. Pages render on the server - 50
+- [x] Next.js App Router API is used in "nextjs-ssr-app-router-api" branch. Pages render on the server with RSC - 50
+- [x] [Optional] React Router 7 is used in "react-router-ssr" branch. Pages render on the server - 50
 
 ## Penalties
 
-- [ ] TypeScript isn't used: -195 points
-- [ ] Test coverage below 80%: -100 points
+- [ ] React Router 7 part implemented without Next.js implementation before: -150 points
+- [ ] Test coverage less than 80%: -30 points per each branch
+- [ ] TypeScript isn't used: -145 points
 - [ ] Usage of any: -20 points per each
 - [ ] Usage of ts-ignore: -20 points per each
 - [ ] Direct DOM manipulations inside the React components: -50 points per each
 - [ ] Presence of code-smells (God-object, chunks of duplicate code), commented code sections: -10 points per each
 - [ ] Usage of component libraries, e.g. Material UI, Ant Design: -100 points
 - [ ] Commits after the deadline: -40 points
-- [ ] Pull Request doesn't follow guideline (including checkboxes in Score): -10 points
+- [ ] Pull Request doesn't follow guideline (including checkboxes in Score) [PR example](https://docs.rs.school/#/en/pull-
+      request-review-process?id=pull-request-description-must-contain-the-following): -10 points
