@@ -1,11 +1,15 @@
 import { SerializeUserData } from '../../store/users-data-slice';
 
+import styles from './card.module.scss';
+
 export function Card(user: SerializeUserData) {
   const { image, age, name, country, email, gender, password } = user;
   return (
     <>
-      <img src={image} alt={name} width="200" height="200" />
-      <div>
+      <div className={styles.image_wrapper}>
+        <img src={image} alt={name} />
+      </div>
+      <div className={styles.details}>
         <h3>
           Name: <strong>{name}</strong>
         </h3>

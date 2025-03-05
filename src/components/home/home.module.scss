@@ -34,3 +34,8 @@
 .first {
   background-color: var(--color--last-card);
 }
+
+.item {
+  border: 2px solid var(--color--last-card);
+  border-radius: 0 0 16px 16px;
+}
