@@ -16,7 +16,7 @@ const formFields = {
   age: yup
     .number()
     .test('age', 'Invalid age', (value) => Number.isInteger(value))
-    .min(0, 'Invalid age')
+    .moreThan(0, 'Older than 0')
     .required('Name is a required field'),
   gender: yup.string().required('Gender is a required field'),
   email: yup.string().email().required('Email is a required field'),
