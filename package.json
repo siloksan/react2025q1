@@ -12,6 +12,7 @@
     "test": "vitest --coverage",
     "test:watch": "vitest --watch",
     "prepare": "husky",
+    "format": "prettier --check ./src",
     "format:fix": "prettier --write ./src"
   },
   "dependencies": {
