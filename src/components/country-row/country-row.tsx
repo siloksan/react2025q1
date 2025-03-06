@@ -1,11 +1,42 @@
+import { useState } from 'react';
 import { Country } from '../types/countries';
 
-export function CountryRow({ country }: { country: Country }) {
+interface Props {
+  country: Country;
+  visitedCountries: Country['name']['common'][];
+  setVisitedCountries: (string: Country['name']['common'][]) => void;
+}
+
+export function CountryRow({
+  country,
+  visitedCountries,
+  setVisitedCountries,
+}: Props) {
   const { name, population, region, flags } = country;
   const flagAlt = flags.alt ?? `Flag of ${name.common}`;
+  const isChecked = visitedCountries?.includes(name.common) ?? false;
+
+  const [checked, setChecked] = useState(isChecked);
+
+  const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(e.target.checked);
+
+    if (visitedCountries.includes(name.common)) {
+      const newVisitedCountries = visitedCountries.filter(
+        (country) => country !== name.common
+      );
+
+      setVisitedCountries(newVisitedCountries);
+    } else {
+      setVisitedCountries([...visitedCountries, name.common]);
+    }
+  };
 
   return (
-    <tr className="h-8 text-xs">
+    <tr className={`h-8 ${checked && 'bg-green-200'} text-xs`}>
+      <td className="max-w-[100px] border border-gray-300 text-center align-middle">
+        <input type="checkbox" onChange={handleCheckbox} checked={checked} />
+      </td>
       <td className="border border-gray-300 text-center align-middle">
         <img
           src={flags.svg}
