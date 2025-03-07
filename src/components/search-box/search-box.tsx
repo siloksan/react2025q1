@@ -31,6 +31,7 @@ export function SearchBox({ handleSearch }: Props) {
           type="text"
           placeholder="country"
           className="min-w-[200px] grow text-[14px] text-gray-900 placeholder:text-gray-400 focus:outline-none"
+          autoComplete="on"
         />
         <button
           type="submit"

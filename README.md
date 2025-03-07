@@ -1,54 +1,124 @@
-# React + TypeScript + Vite
+# Performance Profiling Task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Initial Profiling with React Dev Tools Profiler
 
-Currently, two official plugins are available:
+### Steps Taken:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Used React Dev Tools Profiler to measure performance.
+2. Recorded interactions such as sorting a column.
+3. Analyzed the results including commit duration, render duration, interactions, flame graph, and ranked chart.
 
-## Expanding the ESLint configuration
+### Initial Performance Results:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Commit Duration:** _[insert result]_
+- **Render Duration:** _[insert result]_
+- **Interactions:** _[insert result]_
+- **Flame Graph Analysis:**
+  ![Flame Graph - Before Optimization](path/to/screenshot_before.png)
+- **Ranked Chart Analysis:**
+  ![Ranked Chart - Before Optimization](path/to/screenshot_before.png)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Optimization with React.memo and useMemo
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Optimizations Applied:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Used `React.memo` to prevent unnecessary re-renders.
+- Used `useMemo` to memoize computed values.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### Updated Profiling Results:
+
+- **Commit Duration:** _[insert result]_
+- **Render Duration:** _[insert result]_
+- **Interactions:** _[insert result]_
+- **Flame Graph Analysis:**
+  ![Flame Graph - After Optimization](path/to/screenshot_after.png)
+- **Ranked Chart Analysis:**
+  ![Ranked Chart - After Optimization](path/to/screenshot_after.png)
+
+## Comparison Before & After Optimization
+
+| Type of interaction | Metric          | Before Optimization | After Optimization | Improvement (%) |
+| ------------------- | --------------- | ------------------- | ------------------ | --------------- |
+|                     | Commit Duration | 2.3 ms              | _[insert]_         | _[insert]_      |
+| Sort by name        | Render Duration | 54.9 ms             | _[insert]_         | _[insert]_      |
+|                     | Renders         | 216                 | _[insert]_         | _[insert]_      |
+|                     |                 |                     |                    |                 |
+|                     | Commit Duration | 4.2 ms              | _[insert]_         | _[insert]_      |
+| Sort by population  | Render Duration | 50.6 ms             | _[insert]_         | _[insert]_      |
+|                     | Renders         | 207                 | _[insert]_         | _[insert]_      |
+
+### Observations:
+
+- Reduced commit and render durations.
+- Decreased the number of unnecessary renders.
+- Improved sorting performance.
+
+## Conclusion
+
+Applying `React.memo` and `useMemo` significantly optimized rendering performance. Future improvements could involve analyzing dependencies and fine-tuning state management.
+
+---
+
+**Screenshots & performance analysis should be added in place of placeholders.**
+
+# Performance Profiling Report
+
+## 1. Initial Profiling (Before Optimization)
+
+### Commit Duration
+
+- Sorting by name: **X ms**
+- Sorting by population: **Y ms**
+
+### Render Duration
+
+- CountryRow: **Z ms**
+- CountryTable: **W ms**
+
+### Ranked Chart (Before Optimization)
+
+![Screenshot Before](./screenshots/before-ranked-chart.png)
+
+---
+
+## 2. Optimized Profiling (After Optimization)
+
+### Commit Duration (Improved)
+
+- Sorting by name: **A ms** (↓ B% improvement)
+- Sorting by population: **C ms** (↓ D% improvement)
+
+### Render Duration
+
+- CountryRow: **E ms** (↓ F%)
+- CountryTable: **G ms** (↓ H%)
+
+### Ranked Chart (After Optimization)
+
+![Screenshot After](./screenshots/after-ranked-chart.png)
+
+---
+
+## 3. Summary
+
+- **Reduced render duration by X%**.
+- **Lower commit duration by Y%**.
+- **Fewer unnecessary re-renders** thanks to `React.memo`, `useMemo`, `useCallback`.
+
+## Before optimization:
+
+### Sort by name
+
+Flame Graph
+![alt text](image-1.png)
+
+Ranked Chart:
+![alt text](image-3.png)
+
+### Sort by population
+
+Flame Graph
+![alt text](image-4.png)
+
+Ranked Chart:
+![alt text](image-5.png)

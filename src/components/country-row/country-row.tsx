@@ -35,7 +35,13 @@ export function CountryRow({
   return (
     <tr className={`h-8 ${checked && 'bg-green-200'} text-xs`}>
       <td className="max-w-[100px] border border-gray-300 text-center align-middle">
-        <input type="checkbox" onChange={handleCheckbox} checked={checked} />
+        <input
+          name={name.common}
+          id={name.common}
+          type="checkbox"
+          onChange={handleCheckbox}
+          checked={checked}
+        />
       </td>
       <td className="border border-gray-300 text-center align-middle">
         <img
