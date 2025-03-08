@@ -41,11 +41,11 @@
 | ------------------- | --------------- | ------------------- | ------------------ | --------------- |
 |                     | Commit Duration | 2.3 ms              | _[insert]_         | _[insert]_      |
 | Sort by name        | Render Duration | 54.9 ms             | _[insert]_         | _[insert]_      |
-|                     | Renders         | 216                 | _[insert]_         | _[insert]_      |
+|                     | Renders         | 266                 | _[insert]_         | _[insert]_      |
 |                     |                 |                     |                    |                 |
 |                     | Commit Duration | 4.2 ms              | _[insert]_         | _[insert]_      |
 | Sort by population  | Render Duration | 50.6 ms             | _[insert]_         | _[insert]_      |
-|                     | Renders         | 207                 | _[insert]_         | _[insert]_      |
+|                     | Renders         | 257                 | _[insert]_         | _[insert]_      |
 
 ### Observations:
 

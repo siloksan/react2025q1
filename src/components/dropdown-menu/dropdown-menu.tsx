@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { REGIONS, Regions } from '../../constants/regions';
 
 interface Props {
-  handleRegionChange: (region: Regions) => void;
+  setRegion: React.Dispatch<React.SetStateAction<Regions>>;
 }
 
-export function DropdownMenu({ handleRegionChange }: Props) {
+export function DropdownMenu({ setRegion }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -17,7 +17,7 @@ export function DropdownMenu({ handleRegionChange }: Props) {
   };
 
   const handleMenuItemsClick = (region: Regions) => {
-    handleRegionChange(region);
+    setRegion(region);
     toggleDropdown();
   };
 

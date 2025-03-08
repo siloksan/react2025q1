@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import { Country } from '../types/countries';
+import { SortCallback } from '../../utils.ts';
 
 interface Props {
-  sortCountries: (callback: (a: Country, b: Country) => number) => void;
   sortCallback: (a: Country, b: Country) => number;
+  setSortCallback: React.Dispatch<React.SetStateAction<SortCallback | null>>;
 }
-export function ArrowButton({ sortCountries, sortCallback }: Props) {
+export function ArrowButton({ setSortCallback, sortCallback }: Props) {
   const [rotated, setRotated] = useState(false);
 
   const handleArrowClick = () => {
     setRotated((prev) => !prev);
-
-    if (rotated) {
-      sortCountries(sortCallback);
-    } else {
-      sortCountries((a, b) => sortCallback(b, a));
-    }
+    setSortCallback((prevCallback: SortCallback | null) => {
+      if (!prevCallback) return sortCallback;
+      return (a: Country, b: Country) => prevCallback(b, a);
+    });
   };
 
   return (

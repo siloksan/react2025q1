@@ -1,15 +1,16 @@
 interface Props {
-  handleSearch: (searchTerm: string) => void;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function SearchBox({ handleSearch }: Props) {
+export function SearchBox({ setSearchTerm }: Props) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const formData = new FormData(event.currentTarget);
     const searchTerm = formData.get('country_name');
 
     if (typeof searchTerm === 'string') {
-      handleSearch(searchTerm);
+      setSearchTerm(searchTerm);
     }
   };
 

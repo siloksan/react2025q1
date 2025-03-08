@@ -4,21 +4,31 @@ import { Country } from '../types/countries';
 import { CountryRow } from '../country-row/country-row';
 import { ArrowButton } from '../arrow-button/arrow-button';
 import { LOCALE_KEY, useLocalStorage } from '../../hooks';
+import { useState } from 'react';
+import {
+  callbackSortByName,
+  callbackSortByPopulation,
+  getSortCountries,
+  SortCallback,
+} from '../../utils.ts';
 
 interface Props {
   countries: Country[] | null;
   loading: boolean;
-  sortCountries: (callback: (a: Country, b: Country) => number) => void;
 }
 
-export function CountryTable({ countries, loading, sortCountries }: Props) {
+export function CountryTable({ countries, loading }: Props) {
   const { storedValue, setStoredValue } = useLocalStorage<
     Country['name']['common'][]
   >(LOCALE_KEY.VISITED_COUNTRIES, []);
 
+  const [sortCallback, setSortCallback] = useState<SortCallback | null>(null);
+
+  const sortedCountries = getSortCountries(sortCallback, countries);
+
   const renderCountry = () => {
-    if (countries) {
-      return countries.map((country) => (
+    if (sortedCountries) {
+      return sortedCountries.map((country) => (
         <CountryRow
           key={country.name.common}
           country={country}
@@ -29,14 +39,6 @@ export function CountryTable({ countries, loading, sortCountries }: Props) {
     }
 
     return null;
-  };
-
-  const callbackSortByName = (a: Country, b: Country) => {
-    return a.name.common.localeCompare(b.name.common);
-  };
-
-  const callbackSortByPopulation = (a: Country, b: Country) => {
-    return a.population - b.population;
   };
 
   return (
@@ -50,8 +52,8 @@ export function CountryTable({ countries, loading, sortCountries }: Props) {
               <div className="mx-auto">
                 Name
                 <ArrowButton
-                  sortCountries={sortCountries}
                   sortCallback={callbackSortByName}
+                  setSortCallback={setSortCallback}
                 />
               </div>
             </th>
@@ -59,8 +61,8 @@ export function CountryTable({ countries, loading, sortCountries }: Props) {
               <div className="mx-auto">
                 Population
                 <ArrowButton
-                  sortCountries={sortCountries}
                   sortCallback={callbackSortByPopulation}
+                  setSortCallback={setSortCallback}
                 />
               </div>
             </th>
