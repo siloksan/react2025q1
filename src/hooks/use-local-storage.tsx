@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-export const LOCALE_KEY = {
-  VISITED_COUNTRIES: 'visitedCountries',
-} as const;
+export const LOCALE_KEY = { VISITED_COUNTRIES: 'visitedCountries' } as const;
 
 export type LocaleKey = (typeof LOCALE_KEY)[keyof typeof LOCALE_KEY];
 
@@ -17,10 +15,13 @@ export function useLocalStorage<T>(key: LocaleKey, defaultValue: T) {
     return defaultValue;
   });
 
-  const setStoredValue = (value: T) => {
-    setValue(value);
-    localStorage.setItem(key, JSON.stringify(value));
-  };
+  const setStoredValue = useCallback(
+    (value: T) => {
+      setValue(value);
+      localStorage.setItem(key, JSON.stringify(value));
+    },
+    [key]
+  );
 
   return { storedValue: value, setStoredValue };
 }
