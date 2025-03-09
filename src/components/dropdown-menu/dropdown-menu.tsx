@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { REGIONS, Regions } from '../../constants/regions';
 
 interface Props {
@@ -8,18 +8,21 @@ interface Props {
 export function DropdownMenu({ setRegion }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = useCallback(() => {
     setIsOpen(!isOpen);
-  };
+  }, [isOpen]);
 
   const handleMenuButtonClick = () => {
     toggleDropdown();
   };
 
-  const handleMenuItemsClick = (region: Regions) => {
-    setRegion(region);
-    toggleDropdown();
-  };
+  const handleMenuItemsClick = useCallback(
+    (region: Regions) => {
+      setRegion(region);
+      toggleDropdown();
+    },
+    [setRegion, toggleDropdown]
+  );
 
   const renderOptions = () => {
     return Object.values(REGIONS).map((region) => (

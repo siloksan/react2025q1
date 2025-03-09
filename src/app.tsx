@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ControlBar } from './components/control-bar/control-bar';
 import { CountryTable } from './components/country-table/country-table';
 import { Country } from './components/types/countries';
@@ -29,9 +29,15 @@ export function App() {
     getData();
   }, []);
 
-  const foundedCountry = getSearchCountries(searchTerm, countries);
+  const foundedCountry = useMemo(
+    () => getSearchCountries(searchTerm, countries),
+    [searchTerm, countries]
+  );
 
-  const filteredCountries = getFilterCountries(region, foundedCountry);
+  const filteredCountries = useMemo(
+    () => getFilterCountries(region, foundedCountry),
+    [region, foundedCountry]
+  );
 
   return (
     <div className="flex min-h-screen justify-center bg-gray-100">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Country } from '../types/countries';
 
 interface Props {
@@ -7,11 +7,7 @@ interface Props {
   setVisitedCountries: (string: Country['name']['common'][]) => void;
 }
 
-export function CountryRow({
-  country,
-  visitedCountries,
-  setVisitedCountries,
-}: Props) {
+function CountryRow({ country, visitedCountries, setVisitedCountries }: Props) {
   const { name, population, region, flags } = country;
   const flagAlt = flags.alt ?? `Flag of ${name.common}`;
   const isChecked = visitedCountries?.includes(name.common) ?? false;
@@ -62,3 +58,5 @@ export function CountryRow({
     </tr>
   );
 }
+
+export const MemoizedCountryRow = memo(CountryRow);

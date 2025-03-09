@@ -39,9 +39,9 @@
 
 | Type of interaction | Metric          | Before Optimization | After Optimization | Improvement (%) |
 | ------------------- | --------------- | ------------------- | ------------------ | --------------- |
-|                     | Commit Duration | 2.3 ms              | _[insert]_         | _[insert]_      |
-| Sort by name        | Render Duration | 54.9 ms             | _[insert]_         | _[insert]_      |
-|                     | Renders         | 266                 | _[insert]_         | _[insert]_      |
+|                     | Commit Duration | 0.1 ms              | _[insert]_         | _[insert]_      |
+| Sort by name        | Render Duration | 51.6 ms             | _[insert]_         | _[insert]_      |
+|                     | Renders         | 260                 | _[insert]_         | _[insert]_      |
 |                     |                 |                     |                    |                 |
 |                     | Commit Duration | 4.2 ms              | _[insert]_         | _[insert]_      |
 | Sort by population  | Render Duration | 50.6 ms             | _[insert]_         | _[insert]_      |
@@ -110,15 +110,15 @@ Applying `React.memo` and `useMemo` significantly optimized rendering performanc
 ### Sort by name
 
 Flame Graph
-![alt text](image-1.png)
+![alt text](image-6.png)
 
 Ranked Chart:
-![alt text](image-3.png)
+![alt text](image-7.png)
 
 ### Sort by population
 
 Flame Graph
-![alt text](image-4.png)
+![alt text](image-8.png)
 
 Ranked Chart:
-![alt text](image-5.png)
+![alt text](image-9.png)

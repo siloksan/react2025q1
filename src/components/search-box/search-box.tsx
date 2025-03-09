@@ -1,18 +1,23 @@
+import { useCallback } from 'react';
+
 interface Props {
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function SearchBox({ setSearchTerm }: Props) {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const searchTerm = formData.get('country_name');
+      const formData = new FormData(event.currentTarget);
+      const searchTerm = formData.get('country_name');
 
-    if (typeof searchTerm === 'string') {
-      setSearchTerm(searchTerm);
-    }
-  };
+      if (typeof searchTerm === 'string') {
+        setSearchTerm(searchTerm);
+      }
+    },
+    [setSearchTerm]
+  );
 
   return (
     <div className="flex items-center gap-5">

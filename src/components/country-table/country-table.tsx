@@ -1,10 +1,10 @@
 import { Show } from '../show/show';
 import { Skeleton } from '../skeleton/skeleton';
 import { Country } from '../types/countries';
-import { CountryRow } from '../country-row/country-row';
+import { MemoizedCountryRow } from '../country-row/country-row';
 import { ArrowButton } from '../arrow-button/arrow-button';
 import { LOCALE_KEY, useLocalStorage } from '../../hooks';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   callbackSortByName,
   callbackSortByPopulation,
@@ -24,12 +24,15 @@ export function CountryTable({ countries, loading }: Props) {
 
   const [sortCallback, setSortCallback] = useState<SortCallback | null>(null);
 
-  const sortedCountries = getSortCountries(sortCallback, countries);
+  const sortedCountries = useMemo(
+    () => getSortCountries(sortCallback, countries),
+    [sortCallback, countries]
+  );
 
   const renderCountry = () => {
     if (sortedCountries) {
       return sortedCountries.map((country) => (
-        <CountryRow
+        <MemoizedCountryRow
           key={country.name.common}
           country={country}
           visitedCountries={storedValue}
