@@ -6,119 +6,58 @@
 
 1. Used React Dev Tools Profiler to measure performance.
 2. Recorded interactions such as sorting a column.
-3. Analyzed the results including commit duration, render duration, interactions, flame graph, and ranked chart.
+3. Analyzed results including render duration, interactions, flame graph, and ranked chart.
 
-### Initial Performance Results:
+## Performance Comparison Before & After Optimization
 
-- **Commit Duration:** _[insert result]_
-- **Render Duration:** _[insert result]_
-- **Interactions:** _[insert result]_
-- **Flame Graph Analysis:**
-  ![Flame Graph - Before Optimization](path/to/screenshot_before.png)
-- **Ranked Chart Analysis:**
-  ![Ranked Chart - Before Optimization](path/to/screenshot_before.png)
-
-## Optimization with React.memo and useMemo
-
-### Optimizations Applied:
-
-- Used `React.memo` to prevent unnecessary re-renders.
-- Used `useMemo` to memoize computed values.
-
-### Updated Profiling Results:
-
-- **Commit Duration:** _[insert result]_
-- **Render Duration:** _[insert result]_
-- **Interactions:** _[insert result]_
-- **Flame Graph Analysis:**
-  ![Flame Graph - After Optimization](path/to/screenshot_after.png)
-- **Ranked Chart Analysis:**
-  ![Ranked Chart - After Optimization](path/to/screenshot_after.png)
-
-## Comparison Before & After Optimization
-
-| Type of interaction | Metric          | Before Optimization | After Optimization | Improvement (%) |
-| ------------------- | --------------- | ------------------- | ------------------ | --------------- |
-|                     | Commit Duration | 0.1 ms              | _[insert]_         | _[insert]_      |
-| Sort by name        | Render Duration | 51.6 ms             | _[insert]_         | _[insert]_      |
-|                     | Renders         | 260                 | _[insert]_         | _[insert]_      |
-|                     |                 |                     |                    |                 |
-|                     | Commit Duration | 4.2 ms              | _[insert]_         | _[insert]_      |
-| Sort by population  | Render Duration | 50.6 ms             | _[insert]_         | _[insert]_      |
-|                     | Renders         | 257                 | _[insert]_         | _[insert]_      |
+| Interaction Type   | Metric          | Before Optimization | After Optimization | Improvement (%) |
+| ------------------ | --------------- | ------------------- | ------------------ | --------------- |
+| Sort by Name       | Render Duration | 51.6 ms             | 6.3 ms             | 87.79%          |
+|                    | Renders         | 260                 | 4                  | 98.46%          |
+| Sort by Population | Render Duration | 50.6 ms             | 3.5 ms             | 93.08%          |
+|                    | Renders         | 257                 | 4                  | 98.44%          |
 
 ### Observations:
 
-- Reduced commit and render durations.
-- Decreased the number of unnecessary renders.
-- Improved sorting performance.
+- Render duration significantly improved for sorting operations.
+- Number of unnecessary renders drastically reduced.
 
 ## Conclusion
 
-Applying `React.memo` and `useMemo` significantly optimized rendering performance. Future improvements could involve analyzing dependencies and fine-tuning state management.
+Applying `React.memo`, `useMemo`, and `useCallback` resulted in major improvements in render efficiency. `React.memo` prevented unnecessary re-renders, `useMemo` optimized expensive computations, and `useCallback` memoized functions to prevent redundant re-creations. Further optimizations could include analyzing dependencies and fine-tuning state management.
 
 ---
 
-**Screenshots & performance analysis should be added in place of placeholders.**
+### Visual Comparison
 
-# Performance Profiling Report
+#### Before Optimization:
 
-## 1. Initial Profiling (Before Optimization)
+##### Sort by Name
 
-### Commit Duration
+- Flame Graph
+  ![alt text](public/image-6.png)
+- Ranked Chart
+  ![alt text](public/image-7.png)
 
-- Sorting by name: **X ms**
-- Sorting by population: **Y ms**
+##### Sort by Population
 
-### Render Duration
+- Flame Graph
+  ![alt text](public/image-8.png)
+- Ranked Chart
+  ![alt text](public/image-9.png)
 
-- CountryRow: **Z ms**
-- CountryTable: **W ms**
+#### After Optimization:
 
-### Ranked Chart (Before Optimization)
+##### Sort by Name
 
-![Screenshot Before](./screenshots/before-ranked-chart.png)
+- Flame Graph
+  ![alt text](public/image-10.png)
+- Ranked Chart
+  ![alt text](public/image-11.png)
 
----
+##### Sort by Population
 
-## 2. Optimized Profiling (After Optimization)
-
-### Commit Duration (Improved)
-
-- Sorting by name: **A ms** (↓ B% improvement)
-- Sorting by population: **C ms** (↓ D% improvement)
-
-### Render Duration
-
-- CountryRow: **E ms** (↓ F%)
-- CountryTable: **G ms** (↓ H%)
-
-### Ranked Chart (After Optimization)
-
-![Screenshot After](./screenshots/after-ranked-chart.png)
-
----
-
-## 3. Summary
-
-- **Reduced render duration by X%**.
-- **Lower commit duration by Y%**.
-- **Fewer unnecessary re-renders** thanks to `React.memo`, `useMemo`, `useCallback`.
-
-## Before optimization:
-
-### Sort by name
-
-Flame Graph
-![alt text](image-6.png)
-
-Ranked Chart:
-![alt text](image-7.png)
-
-### Sort by population
-
-Flame Graph
-![alt text](image-8.png)
-
-Ranked Chart:
-![alt text](image-9.png)
+- Flame Graph
+  ![alt text](public/image-12.png)
+- Ranked Chart
+  ![alt text](public/image-13.png)
